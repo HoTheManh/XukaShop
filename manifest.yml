@@ -1,0 +1,5 @@
+---
+applications:
+ - name: TrollTeam
+   random-route: true
+   memory: 128M

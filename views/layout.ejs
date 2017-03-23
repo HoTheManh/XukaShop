@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <% include templates/head.ejs%>
+   </head>
+   <body>
+      <div id="header">
+         <div id="header-top">
+            <div class="col-md-2">
+               <h4><%=shop[0].TenShop%></h4>
+            </div>
+            <div class="col-md-5">
+               <form role="search" action="/search/" + s method="post" class="navbar-form navbar-left">
+                  <div class="input-group">
+                     <input type="text" class="form-control" onkeypress="myFunction()" value="" onclick="Redirect();" placeholder="" name="txt_search" id="searchquery">
+                     <span class="input-group-btn">
+                     <button type="submit" class="btn"><span class="fui-search"></span></button>
+                     </span>
+                  </div>
+               </form>
+            </div>
+            <div class="col-md-5">
+               <ul class="nav navbar-nav">
+                  <li class="col-md-3 col-xs-6">
+                     <a href="/lienhe">
+                        Liên Hệ
+                        <!-- Indicator with number -->
+                     </a>
+                  </li>
+                  <li class="col-md-3 col-xs-6">
+                     <a href="/dangnhap">
+                        Đăng Nhập
+                        <!-- Indicator with number -->
+                     </a>
+                  </li>
+                  <li class="col-md-3 col-xs-6">
+                     <a href="/dangky">
+                        Đăng Ký
+                        <!-- Indicator with number -->
+                     </a>
+                  </li>
+                  <li class="col-md-3 col-xs-6">
+                     <a href="/giohang">
+                        Giỏ Hàng
+                        <!-- Indicator with number -->
+                        <span class="navbar-new">2</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div id="header-bottom">
+            <div class="navbar navbar-default navbar-static-top" role="navigation">
+               <div class="container">
+                  <div class="navbar-header">
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                     <span class="sr-only">Toggle navigation</span>
+                     </button>
+                     <a class="navbar-brand" href="/">Trang Chủ</a>
+                  </div>
+                  <div class="navbar-collapse collapse">
+                     <ul class="nav navbar-nav">
+                        <% menu.forEach(function(item1){%>
+                        <li class="dropdown">
+                           <a href="/<%=item1.MaLoaiHinh%>" class="dropdown-toggle" data-toggle="dropdown"><%= item1.TenLoaiHinh%> <b class="caret"></b></a>
+                           <ul class="dropdown-menu">
+                              <% sub_menu.forEach(function(item2){%>
+                              <% if (item1.MaLoaiHinh==item2.LoaiHinh) {%>
+                              <li><a href="/danhmuc/<%=chuyenKhongDau(item2.TenLoai) %>/<%= item2.MaLoai %>"><%= item2.TenLoai %></a></li>
+                              <% } %>           
+                              <%  })%>
+                           </ul>
+                        </li>
+                        <%  })%>
+                     </ul>
+                  </div>
+                  <!--/.nav-collapse -->
+               </div>
+            </div>
+         </div>
+      </div>
+      <%- body %>
+      <% include templates/footer.ejs%>
+      <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+      <script src="/dist/js/jquery.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="/dist/js/flat-ui.min.js"></script>
+      <script src="/dist/js/application.js"></script>
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="/dist/js/imagezoom.js"></script>
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script defer src="/dist/js/jquery.flexslider.js"></script>
+      <link rel="stylesheet" href="/dist/css/flexslider.css" type="text/css" media="screen" />
+      <script>
+         // Can also be used with $(document).ready()
+         $(window).load(function() {
+           $('.flexslider').flexslider({
+             animation: "slide",
+             controlNav: "thumbnails"
+           });
+         });
+      </script>
+      <script>
+         $('ul.nav li.dropdown').hover(function() {
+         $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(500);
+         }, function() {
+         $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(500);
+         });
+      </script>
+      <%
+         function chuyenKhongDau(alias) {
+            var str = alias;
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
+            str = str.replace(/đ/g,"d");
+            str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`| |{|}|\||\\/g,"-");
+            str = str.replace(/ + /g," ");
+            str = str.trim(); 
+            return str;
+         }
+         %>
+         <script>
+                    document.getElementById("searchquery").addEventListener("keypress", myFunction);
+
+
+                    function myFunction() {
+                        if (event.keyCode == 13) {
+                            var s = document.getElementById("searchquery").value;
+                            window.location.href = "/search/keyword=" + s + "";
+                        }
+                       
+    
+}
+</script>
+ <script>
+                    document.getElementById("searchquery").addEventListener("keypress", myFunction);
+
+
+                    function myFunction() {
+                        if (event.keyCode == 13) {
+                            var s = document.getElementById("searchquery").value;
+                            window.location.href = "/search/keyword=" + s + "";
+                        }
+                       
+    
+}
+</script>
+   </body>
+</html>

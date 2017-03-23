@@ -1,0 +1,217 @@
+body {
+    font-family: TimesNewRoman;
+}
+
+#header {
+    background: #fff;
+}
+
+#header-top {
+    background: #9B59B6;
+    padding: 10px;
+    min-height: 60px;
+    text-align: left;
+}
+
+#header-top h4 {
+    margin: 5px;
+    color: #fff;
+}
+
+.navbar-nav>li>a {
+    color: #fff;
+    padding: 10px;
+}
+
+.caption>#name>a>h5 {
+    font-size: 1.0em;
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    color: #c424ce;
+}
+
+.caption>a>p {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #c424ce;
+}
+
+@media (min-width: 768px) {
+    .navbar-form .input-group {
+        width: 500px;
+    }
+    .caption {
+        text-align: center;
+    }
+    .caption>#name>a>h5 {
+        font-size: 1.0em;
+        font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+        color: #c424ce;
+    }
+    .caption>a>p {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #c424ce;
+    }
+    #name {
+        height: 60px;
+    }
+}
+
+.thumbnail {
+    margin-bottom: 15px;
+}
+
+.collapse .navbar-nav {
+    margin: 0;
+    float: right;
+}
+
+.register {
+    text-align: center;
+    padding-top: 15px;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-5 .navbar-nav {
+        float: right;
+        margin: 0;
+        width: 100%;
+    }
+    .banner {
+        margin-bottom: 20px;
+        padding: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    .product-new .col-md-3 {
+        width: 20%;
+    }
+    .banner {
+        margin-bottom: 20px;
+        padding: 30px;
+    }
+    #content {
+        padding: 20px 40px 20px 40px;
+    }
+}
+
+pa .navbar-default .navbar-nav>li>a {
+    font-size: 1.1em;
+}
+
+.carousel-indicators,
+.carousel-caption {
+    display: none;
+}
+
+.product-new {
+    text-align: center;
+    padding: 0;
+}
+
+.dropdown-menu>li>a {
+    font-weight: bold;
+}
+
+.panel-title a {
+    color: inherit;
+}
+
+.subitem a {
+    color: inherit;
+}
+
+.panel-title {
+    font-size: 1.1em
+}
+
+@media (max-width: 350px) {
+    .cagetory {
+        display: none;
+    }
+    .col-xs-6 {
+        margin: 0;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .caption {
+        text-align: center;
+    }
+    .caption>#name>a>h5 {
+        font-size: 1.0em;
+        font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+        color: #c424ce;
+    }
+    .caption>a>p {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #c424ce;
+    }
+    #name {
+        height: 100px;
+    }
+    .collapse .navbar-nav {
+        margin: 0;
+        float: left;
+    }
+    .container-fluid {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .col-md-8 {
+        padding: 0;
+    }
+    .product-info {
+        padding: 0;
+    }
+}
+
+.cart {
+    padding-top: 20px;
+}
+
+.cart h3 {
+    text-align: center;
+}
+
+.navbar-form {
+    padding-top: 0px;
+}
+
+#content {
+    background: #fff;
+    margin-bottom: 20px;
+    min-height: 300px;
+}
+
+.product-content {
+    padding: 20px;
+}
+
+.banner {
+    margin-bottom: 20px;
+}
+
+#footer {
+    background: #c424ce;
+    padding: 10px;
+}
+
+#footer h3 {
+    color: #fff;
+    bottom: 0;
+}
+
+#footer p {
+    color: #fff;
+}

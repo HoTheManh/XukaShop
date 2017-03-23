@@ -1,0 +1,77 @@
+<% layout('layout') -%>
+<div id="content" class="container-fluid">
+   <div class="col-md-12 product-new">     
+      <% if (sanpham.length>=1){%>
+      <h4>Kết quả tìm kiếm cho: <%=string%></h4>
+      <% sanpham.forEach(function(item){%>
+      <div class="col-md-3 col-xs-6">
+         <div class="thumbnail">
+            <% for (var i=0;i<hinh.length;i++){%>
+            <% if(hinh[i].Mahang==item.MaSanPham){%>
+            <a href="/sanpham/<%=chuyenKhongDau(item.TenSanPham)%>/<%=item.MaSanPham%>"> <img src="<%=hinh[i].FileHinh%>" class="img-responsive" alt="..."></a>
+            <%break ;}%>
+            <% } %>
+            <div class="caption">
+               <div id="name">
+                  <a href="/sanpham/<%=chuyenKhongDau(item.TenSanPham)%>/<%=item.MaSanPham%>">
+                     <h5><%=item.TenSanPham%></h5>
+                  </a>
+               </div>
+               <a href="/sanpham/<%=chuyenKhongDau(item.TenSanPham)%>/<%=item.MaSanPham%>">
+                  <p><%= parseFloat(item.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+               </a>
+            </div>
+         </div>
+      </div>
+      <% }) %>
+      <div class="col-md-12">
+        <% if (pageCount > 1) { %>
+	        <ul class="pager">
+	            <% if (currentPage > 1) { %>
+	                <li><a href="/search/keyword=<%=string %>?page=1">&laquo;</a></li>
+	            <% } %>
+	            <% var i = 1;
+	            if (currentPage > 5) {
+	                i = +currentPage - 4;
+	            } %>
+	            <% if (i !== 1) { %>
+	                <li class="disabled"><a href="#">...</a></li>
+	            <% } %>
+	            <% for (i; i<=pageCount; i++) { %>
+	                <% if (currentPage == i) { %>
+	                    <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>
+	                <% } else { %>
+	                    <li><a href="/search/keyword=<%=string %>?page=<%= i %>"><%= i %></a></li>
+	                <% } %>
+	                <% if (i == (+currentPage + 4)) { %>
+	                    <li class="disabled"><a href="#">...</a></li>
+	                <% break; } %>
+	            <% } %>
+	            <% if (currentPage != pageCount) { %>
+	                <li><a href="/search/keyword=<%=string %>?page=<%= pageCount %>">&raquo;</a></li>
+	            <% } %>
+	        </ul>
+	    <% } %>
+  </div>
+      <% }else {%>
+      <h4>Không có kết quả tìm kiếm cho: <%=string%></h4>
+      <% } %>
+   </div>
+</div>
+<%
+   function chuyenKhongDau(alias) {
+      var str = alias;
+      str = str.toLowerCase();
+      str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
+      str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
+      str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
+      str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
+      str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
+      str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
+      str = str.replace(/đ/g,"d");
+      str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`| |{|}|\||\\/g,"-");
+      str = str.replace(/ + /g," ");
+      str = str.trim(); 
+      return str;
+   }
+%>

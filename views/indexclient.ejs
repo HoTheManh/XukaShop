@@ -1,0 +1,82 @@
+<% layout('layout') -%>
+<div id="content" class="container-fluid">
+   <div class="banner col-md-12">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+         <!-- Indicators -->
+         <ol class="carousel-indicators">
+            <% sanpham.forEach(function(sanpham){%>
+            <% if (sanpham.Banner=="true") {%>
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <% } %>     
+            <% }) %> 
+         </ol>
+         <!-- Wrapper for slides -->
+         <div class="carousel-inner" role="listbox">
+            <% for (var i=0;i<sanpham.length;i++){%>
+            <% if (sanpham[i].Banner=="true") {%>
+            <div class="item active">
+               <a href="/sanpham/<%=chuyenKhongDau(sanpham[i].TenSanPham)%>/<%=sanpham[i].MaSanPham%>"><img src="<%=sanpham[i].HinhBanner%>" alt="..."></a>
+            </div>
+            <%break ;}%>
+            <%  } %> 
+            <% for (var j=0;j<sanpham.length;j++){%>
+            <% if (sanpham[j].Banner=="true") {%>
+            <div class="item">
+               <a href="/sanpham/<%=chuyenKhongDau(sanpham[j].TenSanPham)%>/<%=sanpham[j].MaSanPham%>"><img src="<%=sanpham[j].HinhBanner%>" alt="..."></a>
+            </div>
+            <%}%>
+            <%  } %>                  
+         </div>
+         <!-- Controls -->
+         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+         <span class="sr-only">Previous</span>
+         </a>
+         <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+         <span class="sr-only">Next</span>
+         </a>
+      </div>
+   </div>
+   <div class="col-md-12 product-new">
+      <h4>Sản phẩm mới</h4>
+      <% sanpham.forEach(function(item){%>
+      <div class="col-md-3 col-xs-6">
+         <div class="thumbnail">
+            <% for (var i=0;i<hinh.length;i++){%>
+            <% if(hinh[i].Mahang==item.MaSanPham){%>
+            <a href="/sanpham/<%=chuyenKhongDau(item.TenSanPham)%>/<%=item.MaSanPham%>"> <img src="<%=hinh[i].FileHinh%>" class="img-responsive" alt="..."></a>
+            <%break ;}%>
+            <% } %>
+            <div class="caption">
+               <div id="name">
+                  <a href="/sanpham/<%=chuyenKhongDau(item.TenSanPham)%>/<%=item.MaSanPham%>">
+                     <h5><%=item.TenSanPham%></h5>
+                  </a>
+               </div>
+               <a href="/sanpham/<%=chuyenKhongDau(item.TenSanPham)%>/<%=item.MaSanPham%>">
+                  <p><%= parseFloat(item.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+               </a>
+            </div>
+         </div>
+      </div>
+      <% }) %>
+   </div>
+</div>
+<%
+   function chuyenKhongDau(alias) {
+      var str = alias;
+      str = str.toLowerCase();
+      str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
+      str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
+      str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
+      str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
+      str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
+      str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
+      str = str.replace(/đ/g,"d");
+      str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`| |{|}|\||\\/g,"-");
+      str = str.replace(/ + /g," ");
+      str = str.trim(); 
+      return str;
+   }
+%>
