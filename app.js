@@ -5,16 +5,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-// khai báo connect----------------------------------------
+var session = require('express-session')
+    // khai báo connect----------------------------------------
 var mysql = require('mysql')
-var connection = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'quanlybanhang'
-});
-
 
 /// khai báo routes---------------------------------------------------
 var indexclient = require('./routes/indexclient');
@@ -24,6 +17,7 @@ var cartclient = require('./routes/cartclient');
 var contactclient = require('./routes/contactclient');
 var singleclient = require('./routes/productclient');
 var layout = require('./routes/layoutclient');
+var order = require('./routes/order');
 
 
 var app = express();
@@ -41,13 +35,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+    secret: 'XukaShop',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(function(req, res, next) {
+    layout.getlayout(req, function(menu, sub_menu, shop, cartlist, profile) {
+        res.locals.menu = menu;
+        res.locals.sub_menu = sub_menu;
+        res.locals.shop = shop;
+        res.locals.giohang = cartlist;
+        res.locals.profile = profile;
+        next();
+
+    });
+});
 /// dùng view-----------------------------------------------
 app.use('/', indexclient);
-app.use('/', loginclient);
 app.use('/', registerclient);
 app.use('/', cartclient);
 app.use('/', contactclient);
 app.use('/', singleclient);
+app.use('/', loginclient);
+app.use('/', order);
 
 
 
@@ -57,6 +68,7 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
 
 // development error handler
 // will print stacktrace
@@ -84,7 +96,8 @@ app.use(function(err, req, res, next) {
             title: 'XukaShop-Page Not Found',
             menu: menu,
             sub_menu: sub_menu,
-            shop: shop
+            shop: shop,
+            giohang: cartlist
         });
     });
 });*/
