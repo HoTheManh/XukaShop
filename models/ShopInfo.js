@@ -1,6 +1,6 @@
 var connection = require('./connection');
 
-// lay thong tin san pham
+// lay thong tin shop
 var getShopInfo = function(callback) {
     var query = 'select *from thongtinshop';
     connection.query(query, function(err, rows) {
