@@ -46,9 +46,15 @@
                            <h5><%=sp.TenSanPham%></h5>
                         </a>
                      </div>
-                     <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>">
-                        <p><%= parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
-                     </a>
+                             <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>">
+         <% if (sp.KhuyenMai!="có"){%>
+         <p><%= parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+         <%}else {%>
+         <p><%= parseFloat(sp.GiaKhuyenMai).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+         <p style="text-decoration:line-through;color:black;"><%=parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</p>
+         <%}%>
+
+               </a>
                   </div>
                </div>
             </div>

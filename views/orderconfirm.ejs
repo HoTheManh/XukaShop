@@ -1,0 +1,42 @@
+<% layout('layout') -%>
+
+
+    <div id="content" class="container-fluid">
+        <div class="col-md-6 register">
+          <h4>Đặt hàng không cần đăng nhập</h4>
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="hoten" class="col-lg-4 control-label">Họ-Tên</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" name="hoten" placeholder="Họ Tên">
+              </div>
+            </div>
+             <div class="form-group">
+              <label for="sdt" class="col-lg-4 control-label">Số Điện Thoại</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" name="sdt" placeholder="Số Điện Thoại">
+              </div>
+            </div>
+             <div class="form-group">
+              <label for="inputemail" class="col-lg-4 control-label">Email</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="email" placeholder="Email">
+              </div>
+            </div>
+             <div class="form-group">
+              <label for="diachi" class="col-lg-4 control-label">Địa Chỉ</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="diachi" placeholder="Địa Chỉ">
+              </div>
+            </div>
+             <button type="submit" class="btn btn-inverse">Đặt Hàng</button>
+          </form>
+        </div>
+         <div class="col-md-6">
+          <h4>Đăng ký miễn phí</h4>
+          <p>Việc đăng ký đồng nghĩa với việc bạn chấp nhận những điều khoản của chúng tôi</p>
+           <p>Nếu đã có tài khoản! Vui lòng đăng nhập</p>
+          <a type="button" class="btn btn-inverse" href="/dangnhap">Đăng Nhập</a>
+          <a type="button" class="btn btn-inverse" href="/dangky">Đăng Ký</a>
+        </div>
+   </div>

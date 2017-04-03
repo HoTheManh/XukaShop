@@ -2,17 +2,17 @@
 <div id="content" class="container-fluid">
    <div class="col-md-6 register">
       <h4>Đăng Nhập</h4>
-      <form class="form-horizontal" role="form">
+      <form method="post" action="/dangnhap" class="form-horizontal" role="form">
          <div class="form-group">
             <label for="inputemail" class="col-lg-2 control-label">Email</label>
             <div class="col-lg-10">
-               <input type="text" class="form-control" id="inputemail" placeholder="Email">
+               <input type="text" class="form-control" name="inputemail" placeholder="Email hoặc Tài Khoản">
             </div>
          </div>
          <div class="form-group">
-            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+            <label for="inputPassword" class="col-lg-2 control-label">Mật Khẩu</label>
             <div class="col-lg-10">
-               <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+               <input type="password" class="form-control" name="inputPassword" placeholder="Password">
             </div>
          </div>
          <button type="submit" class="btn btn-inverse">Đăng Nhập</button>

@@ -8,18 +8,15 @@ var sanpham = require('../models/sanpham');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    layout.getlayout(function(menu, sub_menu, shop) {
-        sanpham.getListSanPhamMoi(function(sanpham, hinh) {
-            res.render('indexclient', {
-                title: 'XukaShop - Thời Trang Nam Nữ',
-                menu: menu,
-                sub_menu: sub_menu,
-                sanpham: sanpham,
-                shop: shop,
-                hinh: hinh
-            });
+    sanpham.getListSanPhamMoi(function(sanpham, hinh, banner, sanphambanchay) {
+        res.render('indexclient', {
+            title: 'XukaShop - Thời Trang Nam Nữ',
+            sanpham: sanpham,
+            hinh: hinh,
+            banner: banner,
+            sanphambanchay: sanphambanchay,
         });
     });
-});
 
+});
 module.exports = router;

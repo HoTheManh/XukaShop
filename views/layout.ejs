@@ -9,8 +9,8 @@
             <div class="col-md-2">
                <h4><%=shop[0].TenShop%></h4>
             </div>
-            <div class="col-md-5">
-               <form role="search" action="/search/" + s method="post" class="navbar-form navbar-left">
+            <div class="col-md-4">
+               <form role="search" action="/search/" method="post" class="navbar-form navbar-left">
                   <div class="input-group">
                      <input type="text" class="form-control" onkeypress="myFunction()" value="" onclick="Redirect();" placeholder="" name="txt_search" id="searchquery">
                      <span class="input-group-btn">
@@ -19,15 +19,29 @@
                   </div>
                </form>
             </div>
-            <div class="col-md-5">
-               <ul class="nav navbar-nav">
+            <div class="col-md-6">
+               <ul class="nav navbar-nav nav-top">
                   <li class="col-md-3 col-xs-6">
                      <a href="/lienhe">
                         Liên Hệ
                         <!-- Indicator with number -->
                      </a>
                   </li>
+                  <% if(profile.length>0){%>
                   <li class="col-md-3 col-xs-6">
+                     <a href="/customer">
+                        <%= profile[0].HoTen %>
+                        <!-- Indicator with number -->
+                     </a>
+                  </li>
+                    <li class="col-md-3 col-xs-6">
+                     <a href="/logout">
+                        Đăng Xuất
+                        <!-- Indicator with number -->
+                     </a>
+                  </li>
+                  <%}else{%>
+                <li class="col-md-3 col-xs-6">
                      <a href="/dangnhap">
                         Đăng Nhập
                         <!-- Indicator with number -->
@@ -39,11 +53,13 @@
                         <!-- Indicator with number -->
                      </a>
                   </li>
+                  <%}%>
+                  
                   <li class="col-md-3 col-xs-6">
-                     <a href="/giohang">
+                     <a href="/giohang/view">
                         Giỏ Hàng
                         <!-- Indicator with number -->
-                        <span class="navbar-new">2</span>
+                        <span class="navbar-new"><%= giohang.length%></span>
                      </a>
                   </li>
                </ul>
@@ -68,7 +84,7 @@
                               <% if (item1.MaLoaiHinh==item2.LoaiHinh) {%>
                               <li><a href="/danhmuc/<%=chuyenKhongDau(item2.TenLoai) %>/<%= item2.MaLoai %>"><%= item2.TenLoai %></a></li>
                               <% } %>           
-                              <%  })%>
+                              <%})%>
                            </ul>
                         </li>
                         <%  })%>
@@ -82,15 +98,15 @@
       <%- body %>
       <% include templates/footer.ejs%>
       <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-      <script src="/dist/js/jquery.min.js"></script>
+      <script src="/js/jquery.min.js"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="/dist/js/flat-ui.min.js"></script>
-      <script src="/dist/js/application.js"></script>
+      <script src="/js/flat-ui.min.js"></script>
+      <script src="/js/application.js"></script>
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="/dist/js/imagezoom.js"></script>
+      <script src="/js/imagezoom.js"></script>
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script defer src="/dist/js/jquery.flexslider.js"></script>
-      <link rel="stylesheet" href="/dist/css/flexslider.css" type="text/css" media="screen" />
+      <script defer src="/js/jquery.flexslider.js"></script>
+      <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" />
       <script>
          // Can also be used with $(document).ready()
          $(window).load(function() {
@@ -124,6 +140,9 @@
             return str;
          }
          %>
+
+
+        
          <script>
                     document.getElementById("searchquery").addEventListener("keypress", myFunction);
 
@@ -137,10 +156,16 @@
     
 }
 </script>
- <script>
-                    document.getElementById("searchquery").addEventListener("keypress", myFunction);
-
-
+                <script type="text/javascript">
+         <!--
+                    function Redirect() {
+                        var s = document.getElementById("txt_search").value;
+                        window.location.href = "/search/keyword=" + s + "";
+            }
+         //-->
+      </script>
+ <script>            
+  document.getElementById("searchquery").addEventListener("keypress", myFunction);
                     function myFunction() {
                         if (event.keyCode == 13) {
                             var s = document.getElementById("searchquery").value;

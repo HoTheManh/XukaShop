@@ -6,11 +6,21 @@ var loaihanghoa = require('../models/loaisanpham');
 var shop = require('../models/ShopInfo')
 
 // xuat layout menu- thong tin shop - sub_menu
-var getlayout = function(callback) {
+var getlayout = function(req, callback) {
     loaihinh.getLoaiHinh(function(menu) {
         loaihanghoa.getLoai(function(sub_menu) {
             shop.getShopInfo(function(shop) {
-                callback(menu, sub_menu, shop);
+                var cartlist = [];
+                var profile = [];
+                if (req.session.cart != null) {
+                    cartlist = req.session.cart
+                } else {
+                    req.session.cart = cartlist
+                }
+                if (req.session.user == 1) {
+                    profile = req.session.profile
+                }
+                callback(menu, sub_menu, shop, cartlist, profile);
             });
         });
     });
@@ -19,6 +29,6 @@ var getlayout = function(callback) {
 
 
 module.exports = {
-    getlayout: getlayout
+    getlayout: getlayout,
 
 };

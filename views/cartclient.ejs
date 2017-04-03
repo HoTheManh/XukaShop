@@ -15,30 +15,16 @@
                </tr>
             </thead>
             <tbody>
-               <tr>
-                  <td>1</td>
-                  <td>Anna</td>
-                  <td>Pitt</td>
-                  <td>35</td>
-                  <td>New York</td>
-                  <td>USA</td>
+            <% for (var i=0;i<giohang.length;i++){%>
+                <tr>
+                  <td><%= i+1%></td>
+                  <td><%=  giohang[i].masanpham %></td>
+                  <td><%=  giohang[i].tensanpham %></td>
+                  <td><%=  giohang[i].giasanpham %></td>
+                  <td><input type="number" name="quantity"  min="1" max="5" value="<%=  giohang[i].soluongsanpham %>" disabled></td>
+                  <td><%=  giohang[i].thanhtien %></td>
                </tr>
-               <tr>
-                  <td>1</td>
-                  <td>Anna</td>
-                  <td>Pitt</td>
-                  <td>35</td>
-                  <td>New York</td>
-                  <td>USA</td>
-               </tr>
-               <tr>
-                  <td>1</td>
-                  <td>Anna</td>
-                  <td>Pitt</td>
-                  <td>35</td>
-                  <td>New York</td>
-                  <td>USA</td>
-               </tr>
+           <% } %>     
                <tr class="danger">
                   <td></td>
                   <td></td>
@@ -53,7 +39,7 @@
                   <td>Phụ Thu</td>
                   <td>Giảm giá</td>
                   <td>Tổng Tiền</td>
-                  <td><a type="button" class="btn btn-inverse">Mua Hàng</a></td>
+                  <td><a type="button" href="/dathang/checkout"  class="btn btn-inverse">Đặt Hàng</a></td>
                </tr>
             </tbody>
          </table>
