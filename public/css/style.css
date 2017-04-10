@@ -106,9 +106,12 @@
         #content {
             padding: 20px 40px 20px 40px;
         }
+        .col-md-3 {
+            width: 22%;
+        }
     }
     
-    pa .navbar-default .navbar-nav>li>a {
+    .navbar-default .navbar-nav>li>a {
         font-size: 1.1em;
     }
     

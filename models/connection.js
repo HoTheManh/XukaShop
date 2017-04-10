@@ -6,7 +6,8 @@ var dbConfig = {
     user: process.env.DB_USER || 'root',
     port: process.env.DB_PORT || '3306',
     password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'quanlybanhang'
+    database: process.env.DB_DATABASE || 'quanlybanhang',
+    multipleStatements: true
 };
 var connection = mysql.createConnection(dbConfig);
 

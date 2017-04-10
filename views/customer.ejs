@@ -1,0 +1,106 @@
+<% layout('layout') -%>
+
+    <div id="content" class="container">
+        <div id="thongtin" class="col-md-12 register">
+            <h4>Thông Tin cá nhân</h4>
+            <div id="alert" class="alert alert-warning" role="alert">Hãy cập nhật lại thông tin nếu cần</div>
+            <form method="post" action="/customer/update" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputName" class="col-lg-4 control-label">Họ-Tên</label>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" name="inputName" value="<%= profile[0].HoTen%>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSdt" class="col-lg-4 control-label">Số Điện Thoại</label>
+                    <div class="col-lg-4">
+                        <input type="number" class="form-control" name="inputSdt" value="<%= profile[0].SDT%>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputemail" class="col-lg-4 control-label">Email</label>
+                    <div class="col-lg-4">
+                        <input type="Email" class="form-control" name="inputemail" value="<%= profile[0].Email%>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDiachi" class="col-lg-4 control-label">Địa Chỉ</label>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" name="inputDiachi" value="<%= profile[0].DiaChi%>" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-inverse">Cập Nhật</button>
+            </form>
+        </div>
+        <%if(donhang.length>0){%>
+            <div class="<col-md-12></col-md-12> cart">
+                <h3>Danh sách đơn hàng của bạn</h3>
+                <% for(var i=0;i<donhang.length;i++){%>
+                    <div class="table-responsive">
+                        <p>Đơn hàng:
+                            <%= donhang[i].MaDonHang%>
+                        </p>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mã Sản Phẩm</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Đơn Giá</th>
+                                    <th>Số Lượng</th>
+                                    <th>Thành Tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%if (chitiet.length>0){%>
+
+                                    <% for (var j=0;j<chitiet.length;j++){%>
+                                        <%if (chitiet[j].MaDonHang==donhang[i].MaDonHang){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= i+1%>
+                                                </td>
+                                                <td>
+                                                    <%=  chitiet[j].MaHangHoa %>
+                                                </td>
+                                                <td>
+                                                    <%=  chitiet[j].HangHoa %>
+                                                </td>
+                                                <td>
+                                                    <%=parseFloat(chitiet[j].DonGia).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ
+
+                                                </td>
+                                                <td>
+                                                    <%= chitiet[j].SoLuong %>
+                                                </td>
+                                                <td>
+                                                    <%=parseFloat(chitiet[j].ThanhTien).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</td>
+                                            </tr>
+                                            <%}%>
+                                                <% } %>
+                                                    <%}%>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>Ngày Đặt:
+                                                                <%= donhang[i].NgayDatHang%>
+                                                            </td>
+                                                            <td>Phụ Thu:
+                                                                <%=parseFloat(donhang[i].PhuThu).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ
+                                                            </td>
+                                                            <td>Giảm giá:
+                                                                <%=parseFloat(donhang[i].GiamGia).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ
+                                                            </td>
+                                                            <td>Tổng Tiền:
+                                                                <%=parseFloat(donhang[i].TongTien).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ
+                                                            </td>
+                                                            <td>Tình trạng:
+                                                                <%= donhang[i].TrangThai%>
+                                                            </td>
+                                                        </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } %>
+            </div>
+            <%}%>
+    </div>

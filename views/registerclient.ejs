@@ -1,42 +1,48 @@
 <% layout('layout') -%>
 <div id="content" class="container-fluid">
    <div class="col-md-6 register">
+    <% if(err==2){%>
+    <div class="alert alert-danger" role="alert">Tài khoản hoặc email đã được đăng ký. Vui lòng thay đổi thông tin</div>
+    <% }%>
+     <% if(err==1){%>
+    <div class="alert alert-danger" role="alert">Thông tin bạn nhập không đúng định dạng. Vui lòng thay đổi thông tin</div>
+    <% }%>
       <h4>Đăng Ký</h4>
-      <form class="form-horizontal" role="form">
+      <form method="post" action="/dangky" class="form-horizontal" role="form">
          <div class="form-group">
-            <label for="inputemail" class="col-lg-4 control-label">Họ-Tên</label>
+            <label for="inputName" class="col-lg-4 control-label">Họ-Tên</label>
             <div class="col-lg-8">
-               <input type="text" class="form-control" id="inputemail" placeholder="Email">
+               <input type="text" class="form-control" name="inputName" placeholder="Họ Tên" required>
             </div>
          </div>
          <div class="form-group">
-            <label for="inputemail" class="col-lg-4 control-label">Số Điện Thoại</label>
+            <label for="inputSdt" class="col-lg-4 control-label">Số Điện Thoại</label>
             <div class="col-lg-8">
-               <input type="text" class="form-control" id="inputemail" placeholder="Email">
+               <input type="number" class="form-control" name="inputSdt" placeholder="Số Điện Thoại" required>
             </div>
          </div>
          <div class="form-group">
             <label for="inputemail" class="col-lg-4 control-label">Email</label>
             <div class="col-lg-8">
-               <input type="text" class="form-control" id="inputemail" placeholder="Email">
+               <input type="Email" class="form-control" name="inputemail" placeholder="Email">
             </div>
          </div>
          <div class="form-group">
-            <label for="inputemail" class="col-lg-4 control-label">Địa Chỉ</label>
+            <label for="inputDiachi" class="col-lg-4 control-label">Địa Chỉ</label>
             <div class="col-lg-8">
-               <input type="text" class="form-control" id="inputemail" placeholder="Email">
+               <input type="text" class="form-control" name="inputDiachi" placeholder="Địa chỉ" required>
             </div>
          </div>
          <div class="form-group">
-            <label for="inputemail" class="col-lg-4 control-label">Tài Khoản</label>
+            <label for="inputTaikhoan" class="col-lg-4 control-label">Tài Khoản</label>
             <div class="col-lg-8">
-               <input type="text" class="form-control" id="inputemail" placeholder="Email">
+               <input type="text" class="form-control" name="inputTaikhoan" placeholder="Tài Khoản" required>
             </div>
          </div>
          <div class="form-group">
             <label for="inputPassword" class="col-lg-4 control-label">Mật Khẩu</label>
             <div class="col-lg-8">
-               <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+               <input type="password" class="form-control" name="inputPassword" placeholder="Password" required>
             </div>
          </div>
          <button type="submit" class="btn btn-inverse">Đăng Ký</button>

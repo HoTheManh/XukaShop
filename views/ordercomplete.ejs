@@ -1,101 +1,131 @@
 <% layout('layout') -%>
+    <div id="content" class="container">
+        <h4 id="string"></h4>
+        <% if(giohang.length>0) {%>
+            <div id="head" class="col-md-12 register">
+                <h4>Xác nhận đặt hàng</h4>
+                <div class="alert alert-danger" role="alert">Hãy cập nhật lại thông tin nếu cần</div>
+                <form method="post" action="/dathang/hoantat" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="inputName" class="col-lg-4 control-label">Họ-Tên</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="inputName" value="<%= profile[0].HoTen%>" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSdt" class="col-lg-4 control-label">Số Điện Thoại</label>
+                        <div class="col-lg-4">
+                            <input type="number" class="form-control" name="inputSdt" value="<%= profile[0].SDT%>" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputemail" class="col-lg-4 control-label">Email</label>
+                        <div class="col-lg-4">
+                            <input type="Email" class="form-control" name="inputemail" value="<%= profile[0].Email%>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDiachi" class="col-lg-4 control-label">Địa Chỉ</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="inputDiachi" value="<%= profile[0].DiaChi%>" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-inverse">Cập Nhật</button>
+                </form>
+            </div>
+            <div id="body" class="<col-md-12></col-md-12> cart">
+                <h3>Đơn hàng của bạn:
+                </h3>
 
-    <div id="content" class="container">  
-        <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Library</a></li>
-  <li class="active">Data</li>
-</ol>
-            <div class="col-md-12 register">
-          <h4>Cám ơn bạn đã đặt hàng</h4>
-          <div class="alert alert-warning" role="alert">Hãy cập nhật lại thông tin nếu cần</div>
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <label for="inputemail" class="col-lg-2 control-label">Họ-Tên</label>
-              <div class="col-lg-5">
-                <input type="text" class="form-control" id="inputemail" placeholder="Email">
-              </div>
-            </div>
-             <div class="form-group">
-              <label for="inputemail" class="col-lg-2 control-label">Số Điện Thoại</label>
-              <div class="col-lg-5">
-                <input type="text" class="form-control" id="inputemail" placeholder="Email">
-              </div>
-            </div>
-             <div class="form-group">
-              <label for="inputemail" class="col-lg-2 control-label">Email</label>
-              <div class="col-lg-5">
-                <input type="text" class="form-control" id="inputemail" placeholder="Email">
-              </div>
-            </div>
-             <div class="form-group">
-              <label for="inputemail" class="col-lg-2 control-label">Địa Chỉ</label>
-              <div class="col-lg-5">
-                <input type="text" class="form-control" id="inputemail" placeholder="Email">
-              </div>
-            </div>
-             <button type="submit" class="btn btn-inverse">Cập nhật</button>
-          </form>
-        </div>  
-        <div class="<col-md-12></col-md-12> cart">
-  <h3>Đơn hàng của bạn: 111</h3>          
-  <div class="table-responsive">          
-  <table class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Mã Sản Phẩm</th>
-        <th>Tên Sản Phẩm</th>
-        <th>Đơn Giá</th>
-        <th>Số Lượng</th>
-        <th>Thành Tiền</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Anna</td>
-        <td>Pitt</td>
-        <td>35</td>
-        <td>New York</td>
-        <td>USA</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Anna</td>
-        <td>Pitt</td>
-        <td>35</td>
-        <td>New York</td>
-        <td>USA</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Anna</td>
-        <td>Pitt</td>
-        <td>35</td>
-        <td>New York</td>
-        <td>USA</td>
-      </tr>
-       <tr class="danger">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-       <tr>
-        <td></td>
-        <td></td>
-        <td>Phụ Thu</td>
-        <td>Giảm giá</td>
-        <td>Tổng Tiền</td>
-        <td><a type="button" class="btn btn-inverse">Hủy</a></td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-</div>
+                <div id="showgiohang" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã Sản Phẩm</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Đơn Giá</th>
+                                <th>Số Lượng</th>
+                                <th>Thành Tiền</th>
 
-     
-   </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% var tongtien=0; %>
+                                <% for (var i=0;i<giohang.length;i++){%>
+                                    <% var tongtien=tongtien+giohang[i].thanhtien; %>
+                                        <tr>
+                                            <td>
+                                                <%= i+1%>
+                                            </td>
+                                            <td>
+                                                <%=  giohang[i].masanpham %>
+                                            </td>
+                                            <td>
+                                                <%=  giohang[i].tensanpham %>
+                                            </td>
+                                            <td>
+                                                <%=parseFloat(giohang[i].giasanpham).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ
+
+                                            </td>
+                                            <td>
+                                                <%=  giohang[i].soluongsanpham %>
+                                            </td>
+                                            <td>
+                                                <%=parseFloat(giohang[i].thanhtien).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</td>
+                                        </tr>
+                                        <% } %>
+                                            <tr class="danger">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+                                            </tr>
+                                            <tr class="danger">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Tổng Tiền:
+                                                    <%=parseFloat(tongtien).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ </td>
+                                                <td><button class="btn btn-inverse" onclick="dathang(this,id)">Đặt hàng</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a type="button" href="/" class="btn btn-danger">Hủy</a></td>
+
+                                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <%} %>
+    </div>
+
+    <script>
+        function dathang(obj, id) {
+            $.ajax({
+                url: "/dathang/true",
+                type: "post",
+                data: {
+                    'id': id
+                },
+                success: function(data) {
+                    $('#head').load(document.URL + ' #head');
+                    $('#body').load(document.URL + ' #body');
+                    $('#giohang').load(document.URL + ' #giohang');
+
+                    document.getElementById("string").innerHTML = "Đặt Hàng Thành Công";
+                }
+            });
+        }
+    </script>

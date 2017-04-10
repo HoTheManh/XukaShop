@@ -1,26 +1,29 @@
 <% layout('layout') -%>
-<div id="content" class="container-fluid">
-   <div class="col-md-6 register">
-      <h4>Đăng Nhập</h4>
-      <form method="post" action="/dangnhap" class="form-horizontal" role="form">
-         <div class="form-group">
-            <label for="inputemail" class="col-lg-2 control-label">Email</label>
-            <div class="col-lg-10">
-               <input type="text" class="form-control" name="inputemail" placeholder="Email hoặc Tài Khoản">
-            </div>
-         </div>
-         <div class="form-group">
-            <label for="inputPassword" class="col-lg-2 control-label">Mật Khẩu</label>
-            <div class="col-lg-10">
-               <input type="password" class="form-control" name="inputPassword" placeholder="Password">
-            </div>
-         </div>
-         <button type="submit" class="btn btn-inverse">Đăng Nhập</button>
-      </form>
-   </div>
-   <div class="col-md-6">
-      <h4>Đăng ký miễn phí</h4>
-      <p>Việc đăng ký đồng nghĩa với việc bạn chấp nhận những điều khoản của chúng tôi</p>
-      <a type="button" class="btn btn-inverse" href="/dangky">Đăng Ký</a>
-   </div>
-</div>
+    <div id="content" class="container-fluid">
+        <div class="col-md-6 register">
+            <% if(err==1){%>
+                <div class="alert alert-danger" role="alert">Sai thông tin đăng nhập. Vui lòng kiểm tra lại</div>
+                <% }%>
+                    <h4>Đăng Nhập</h4>
+                    <form method="post" action="/dangnhap" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="inputTaikhoan" class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="inputTaikhoan" placeholder="Email hoặc Tài Khoản" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Mật Khẩu</label>
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" name="inputPassword" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-inverse">Đăng Nhập</button>
+                    </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Đăng ký miễn phí</h4>
+            <p>Việc đăng ký đồng nghĩa với việc bạn chấp nhận những điều khoản của chúng tôi</p>
+            <a type="button" class="btn btn-inverse" href="/dangky">Đăng Ký</a>
+        </div>
+    </div>

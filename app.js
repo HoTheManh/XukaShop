@@ -5,8 +5,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session')
-    // khai báo connect----------------------------------------
+var session = require('express-session');
+var crypto = require('crypto-js');
+// khai báo connect----------------------------------------
 var mysql = require('mysql')
 
 /// khai báo routes---------------------------------------------------
@@ -18,6 +19,7 @@ var contactclient = require('./routes/contactclient');
 var singleclient = require('./routes/productclient');
 var layout = require('./routes/layoutclient');
 var order = require('./routes/order');
+var customer = require('./routes/customer');
 
 
 var app = express();
@@ -41,14 +43,14 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(function(req, res, next) {
-    layout.getlayout(req, function(menu, sub_menu, shop, cartlist, profile) {
+    layout.getlayout(req, function(menu, sub_menu, shop, cartlist, profile, user) {
         res.locals.menu = menu;
         res.locals.sub_menu = sub_menu;
         res.locals.shop = shop;
         res.locals.giohang = cartlist;
         res.locals.profile = profile;
+        res.locals.users = user;
         next();
-
     });
 });
 /// dùng view-----------------------------------------------
@@ -59,48 +61,34 @@ app.use('/', contactclient);
 app.use('/', singleclient);
 app.use('/', loginclient);
 app.use('/', order);
+app.use('/', customer);
 
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    layout.getlayout(req, function(menu, sub_menu, shop, cartlist, profile, user) {
+        res.locals.menu = menu;
+        res.locals.sub_menu = sub_menu;
+        res.locals.shop = shop;
+        res.locals.giohang = cartlist;
+        res.locals.profile = profile;
+        res.locals.users = user;
+        var errr = new Error('Not Found');
+        errr.status = 404;
+        console.log(errr);
+        next(errr);
+    });
+
 });
 
 
-// development error handler
-// will print stacktrace
-/*
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        layout.getlayout(function(menu, sub_menu, shop) {
-            res.render('error', {
-                title: 'XukaShop-Page Not Found',
-                menu: menu,
-                sub_menu: sub_menu,
-                shop: shop
-            });
-        });
-    });
-}
-*/
-// production error handler
-// no stacktraces leaked to user
-/*
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    layout.getlayout(function(menu, sub_menu, shop) {
-        res.render('error', {
-            title: 'XukaShop-Page Not Found',
-            menu: menu,
-            sub_menu: sub_menu,
-            shop: shop,
-            giohang: cartlist
-        });
-    });
-});*/
 
+app.use(function(errr, req, res, next) {
+    res.status(errr.status || 500);
+    res.render('error', {
+        title: 'XukaShop-Page Not Found'
+    });
+});
 
 module.exports = app;

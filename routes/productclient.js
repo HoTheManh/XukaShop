@@ -82,10 +82,36 @@ router.get('/danhmuc/:loai/:id/', function(req, res) {
 
 router.post('/search/', function(req, res) {
     var string = req.body.txt_search;
-    res.redirect('/search/keyword=' + string);
+    sanpham.searchSanPham(string, function(sanphams) {
+        // kiem tra co gia tri tra ve  neu khong co -> page not found 
+        // xuat gia tri ra giao dien
+        if (sanphams.length < 1) { // kiem tra co gia tri tra ve  neu khong co -> page not found 
+            res.render('searchclient', {
+                title: 'XukaShop-' + string,
+                sanpham: sanphams,
+                string: string,
+            });
+        } else {
+            hinhanh.getListHinhSanPham(function(hinh) {
+                var pagesize = 15;
+                pagination(sanphams, pagesize, req, function(pageCount, currentPage, ItemList) {
+                    res.render('searchclient', {
+                        title: 'XukaShop-' + string,
+                        sanpham: ItemList,
+                        hinh: hinh,
+                        string: string,
+                        pageSize: pagesize,
+                        totalSanpham: sanphams.length,
+                        pageCount: pageCount,
+                        currentPage: currentPage,
+                    });
+                });
+            });
+        }
+    });
 });
 /// truyen cho get
-router.get('/search/keyword=:string', function(req, res) {
+/*router.get('/search/keyword=:string', function(req, res) {
     var string = req.params.string;
     sanpham.searchSanPham(string, function(sanphams) {
         // kiem tra co gia tri tra ve  neu khong co -> page not found 
@@ -115,7 +141,7 @@ router.get('/search/keyword=:string', function(req, res) {
         }
     });
 
-});
+});*/
 
 
 

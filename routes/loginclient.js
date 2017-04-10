@@ -11,11 +11,11 @@ var customer = require('../models/customer');
 /* GET trang dang nhap */
 router.get('/dangnhap', function(req, res) {
     if (req.session.user == 1) {
-        res.redirect('/');
-
+        res.redirect('/customer');
     } else {
         res.render('loginclient', {
             title: 'XukaShop-Đăng Nhập',
+            err: 0
         });
     }
 });
@@ -23,10 +23,17 @@ router.get('/dangnhap', function(req, res) {
 
 // post đăng nhập
 router.post('/dangnhap', urlencodedParser, function(req, res) {
-    customer.loginCustomer(req.body, res, function(tontai, profile) {
+    customer.loginCustomer(req.body, function(tontai, profile) {
         req.session.user = tontai;
         req.session.profile = profile;
-        res.redirect('/dangnhap')
+        if (tontai == 1) {
+            res.redirect('/customer');
+        } else {
+            res.render('loginclient', {
+                title: 'XukaShop-Đăng Nhập',
+                err: 1
+            });
+        }
     });
 
 });
@@ -34,7 +41,7 @@ router.post('/dangnhap', urlencodedParser, function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.session.user = 0;
-    req.session.profile = [];
+    req.session.profile = null;
     res.redirect('/dangnhap');
 });
 

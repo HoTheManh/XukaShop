@@ -1,129 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <% include templates/head.ejs%>
-   </head>
-   <body>
-      <div id="header">
-         <div id="header-top">
+
+<head>
+    <% include templates/head.ejs%>
+</head>
+
+<body>
+    <div id="header">
+        <div id="header-top">
             <div class="col-md-2">
-               <h4><%=shop[0].TenShop%></h4>
+                <h4>
+                    <%=shop[0].TenShop%>
+                </h4>
             </div>
             <div class="col-md-4">
-               <form role="search" action="/search/" method="post" class="navbar-form navbar-left">
-                  <div class="input-group">
-                     <input type="text" class="form-control" onkeypress="myFunction()" value="" onclick="Redirect();" placeholder="" name="txt_search" id="searchquery">
-                     <span class="input-group-btn">
+                <form role="search" action="/search/" method="post" class="navbar-form navbar-left">
+                    <div class="input-group">
+                        <input type="text" class="form-control" onkeypress="myFunction()" value="" onclick="Redirect();" placeholder="" name="txt_search" id="searchquery">
+                        <span class="input-group-btn">
                      <button type="submit" class="btn"><span class="fui-search"></span></button>
-                     </span>
-                  </div>
-               </form>
+                        </span>
+                    </div>
+                </form>
             </div>
             <div class="col-md-6">
-               <ul class="nav navbar-nav nav-top">
-                  <li class="col-md-3 col-xs-6">
-                     <a href="/lienhe">
+                <ul class="nav navbar-nav nav-top">
+                    <li class="col-md-3 col-xs-6">
+                        <a href="/lienhe">
                         Liên Hệ
                         <!-- Indicator with number -->
                      </a>
-                  </li>
-                  <% if(profile.length>0){%>
-                  <li class="col-md-3 col-xs-6">
-                     <a href="/customer">
-                        <%= profile[0].HoTen %>
-                        <!-- Indicator with number -->
-                     </a>
-                  </li>
-                    <li class="col-md-3 col-xs-6">
-                     <a href="/logout">
+                    </li>
+                    <% if ( users ==1 ) {%>
+                        <li class="col-md-4 col-xs-6">
+                            <a href="/customer">
+                                <%= profile[0].HoTen %>
+                                    <!-- Indicator with number -->
+                            </a>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <a href="/logout">
                         Đăng Xuất
                         <!-- Indicator with number -->
                      </a>
-                  </li>
-                  <%}else{%>
-                <li class="col-md-3 col-xs-6">
-                     <a href="/dangnhap">
+                        </li>
+                        <%}else{%>
+                            <li class="col-md-3 col-xs-6">
+                                <a href="/dangnhap">
                         Đăng Nhập
                         <!-- Indicator with number -->
                      </a>
-                  </li>
-                  <li class="col-md-3 col-xs-6">
-                     <a href="/dangky">
+                            </li>
+                            <li class="col-md-3 col-xs-6">
+                                <a href="/dangky">
                         Đăng Ký
                         <!-- Indicator with number -->
                      </a>
-                  </li>
-                  <%}%>
-                  
-                  <li class="col-md-3 col-xs-6">
-                     <a href="/giohang/view">
+                            </li>
+                            <%}%>
+
+                                <li class="col-md-3 col-xs-6">
+                                    <a href="/giohang/view">
                         Giỏ Hàng
                         <!-- Indicator with number -->
-                        <span class="navbar-new"><%= giohang.length%></span>
+                        <span id="giohang" class="navbar-new"><%= giohang.length%></span>
                      </a>
-                  </li>
-               </ul>
+                                </li>
+                </ul>
             </div>
-         </div>
-         <div id="header-bottom">
+        </div>
+        <div id="header-bottom">
             <div class="navbar navbar-default navbar-static-top" role="navigation">
-               <div class="container">
-                  <div class="navbar-header">
-                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                      <span class="sr-only">Toggle navigation</span>
                      </button>
-                     <a class="navbar-brand" href="/">Trang Chủ</a>
-                  </div>
-                  <div class="navbar-collapse collapse">
-                     <ul class="nav navbar-nav">
-                        <% menu.forEach(function(item1){%>
-                        <li class="dropdown">
-                           <a href="/<%=item1.MaLoaiHinh%>" class="dropdown-toggle" data-toggle="dropdown"><%= item1.TenLoaiHinh%> <b class="caret"></b></a>
-                           <ul class="dropdown-menu">
-                              <% sub_menu.forEach(function(item2){%>
-                              <% if (item1.MaLoaiHinh==item2.LoaiHinh) {%>
-                              <li><a href="/danhmuc/<%=chuyenKhongDau(item2.TenLoai) %>/<%= item2.MaLoai %>"><%= item2.TenLoai %></a></li>
-                              <% } %>           
-                              <%})%>
-                           </ul>
-                        </li>
-                        <%  })%>
-                     </ul>
-                  </div>
-                  <!--/.nav-collapse -->
-               </div>
+                        <a class="navbar-brand" href="/">Trang Chủ</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <% menu.forEach(function(item1){%>
+                                <li class="dropdown">
+                                    <a href="/<%=item1.MaLoaiHinh%>" class="dropdown-toggle" data-toggle="dropdown">
+                                        <%= item1.TenLoaiHinh%> <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <% sub_menu.forEach(function(item2){%>
+                                            <% if (item1.MaLoaiHinh==item2.LoaiHinh) {%>
+                                                <li>
+                                                    <a href="/danhmuc/<%=chuyenKhongDau(item2.TenLoai) %>/<%= item2.MaLoai %>">
+                                                        <%= item2.TenLoai %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <%})%>
+                                    </ul>
+                                </li>
+                                <%  })%>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
             </div>
-         </div>
-      </div>
-      <%- body %>
-      <% include templates/footer.ejs%>
-      <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-      <script src="/js/jquery.min.js"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="/js/flat-ui.min.js"></script>
-      <script src="/js/application.js"></script>
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="/js/imagezoom.js"></script>
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script defer src="/js/jquery.flexslider.js"></script>
-      <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" />
-      <script>
-         // Can also be used with $(document).ready()
-         $(window).load(function() {
-           $('.flexslider').flexslider({
-             animation: "slide",
-             controlNav: "thumbnails"
-           });
-         });
-      </script>
-      <script>
-         $('ul.nav li.dropdown').hover(function() {
-         $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(500);
-         }, function() {
-         $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(500);
-         });
-      </script>
-      <%
+        </div>
+    </div>
+    <%- body %>
+        <% include templates/footer.ejs%>
+            <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+            <script src="/js/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="/js/flat-ui.min.js"></script>
+            <script src="/js/application.js"></script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="/js/imagezoom.js"></script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script defer src="/js/jquery.flexslider.js"></script>
+            <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" />
+            <script>
+                // Can also be used with $(document).ready()
+                $(window).load(function() {
+                    $('.flexslider').flexslider({
+                        animation: "slide",
+                        controlNav: "thumbnails"
+                    });
+                });
+            </script>
+            <script>
+                $('ul.nav li.dropdown').hover(function() {
+                    $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(500);
+                }, function() {
+                    $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(500);
+                });
+            </script>
+            <%
          function chuyenKhongDau(alias) {
             var str = alias;
             str = str.toLowerCase();
@@ -142,8 +151,8 @@
          %>
 
 
-        
-         <script>
+
+                <script>
                     document.getElementById("searchquery").addEventListener("keypress", myFunction);
 
 
@@ -152,28 +161,27 @@
                             var s = document.getElementById("searchquery").value;
                             window.location.href = "/search/keyword=" + s + "";
                         }
-                       
-    
-}
-</script>
+
+
+                    }
+                </script>
                 <script type="text/javascript">
-         <!--
                     function Redirect() {
-                        var s = document.getElementById("txt_search").value;
-                        window.location.href = "/search/keyword=" + s + "";
-            }
-         //-->
-      </script>
- <script>            
-  document.getElementById("searchquery").addEventListener("keypress", myFunction);
+
+                    }
+                    //-->
+                </script>
+                <script>
+                    document.getElementById("searchquery").addEventListener("keypress", myFunction);
+
                     function myFunction() {
                         if (event.keyCode == 13) {
-                            var s = document.getElementById("searchquery").value;
-                            window.location.href = "/search/keyword=" + s + "";
+
                         }
-                       
-    
-}
-</script>
-   </body>
+
+
+                    }
+                </script>
+</body>
+
 </html>
