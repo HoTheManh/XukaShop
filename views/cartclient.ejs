@@ -77,22 +77,25 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         function deleteRow(obj, id) {
-            $.ajax({
-                url: "/giohang/remove/" + id,
-                type: "post",
-                data: {
-                    'id': id
-                },
-                success: function(data) {
-                    $(obj).closest('tr').fadeOut(300, function() {
-                        $(obj).closest('tr').remove();
-                        var soluong = document.getElementById("giohang").innerText;
-                        // document.getElementById("giohang").innerHTML = soluong - 1;
-                        $('#showgiohang').load(document.URL + ' #showgiohang');
-                        $('#giohang').load(document.URL + ' #giohang');
-                    });
-                }
-            });
+            var r = confirm("Bạn có muốn xóa khỏi giỏ hàng");
+            if (r == true) {
+                $.ajax({
+                    url: "/giohang/remove/" + id,
+                    type: "post",
+                    data: {
+                        'id': id
+                    },
+                    success: function(data) {
+                        $(obj).closest('tr').fadeOut(300, function() {
+                            $(obj).closest('tr').remove();
+                            var soluong = document.getElementById("giohang").innerText;
+                            // document.getElementById("giohang").innerHTML = soluong - 1;
+                            $('#showgiohang').load(document.URL + ' #showgiohang');
+                            $('#giohang').load(document.URL + ' #giohang');
+                        });
+                    }
+                });
+            }
         }
     </script>
     <script>

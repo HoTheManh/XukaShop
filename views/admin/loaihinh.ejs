@@ -1,0 +1,115 @@
+<% layout('layoutadmin') -%>
+    <div class="grid-form">
+        <div class="grid-form1">
+            <h3>Loại hình sản phẩm</h3>
+            <div class="panel-body">
+                <form method="post" action="/quanlyshop/loaihinhsanpham" role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tên loại hình</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" name="inputTenLoaihinh" class="form-control1" placeholder="Tên loại hình" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Mô tả</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+
+                                <input type="text" class="form-control1" name="inputMotaLoaihinh" placeholder="Mô tả">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <button class="btn-dark btn hvr-icon-float-away col-24">Thêm</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="grid-form1">
+            <h3 id="forms-inline">Thông Tin Chi Tiết</h3>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputName2">Tên Loại Hình</label>
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="Nhập Tên">
+                </div>
+                <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+            </form>
+            <%if(loaihinh.length>0){%>
+                <div id="table" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã Loại Hình</th>
+                                <th>Tên Loại Hình</th>
+                                <th>Mô tả</th>
+                                <th>Tác Vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(var i=0;i<loaihinh.length;i++ ){%>
+                                <tr>
+
+                                    <td>
+                                        <%= i+1%>
+                                    </td>
+                                    <td><input type="text" id="inputUpdateMaLoaihinh<%= loaihinh[i].MaLoaiHinh%>" class="form-control1" value="<%= loaihinh[i].MaLoaiHinh%>" disabled></td>
+                                    <td><input type="text" id="inputUpdateTenLoaihinh<%= loaihinh[i].MaLoaiHinh%>" class="form-control1" value="<%= loaihinh[i].TenLoaiHinh%>"></td>
+                                    <td><input type="text" id="inputUpdateMotaLoaihinh<%= loaihinh[i].MaLoaiHinh%>" class="form-control1" value="<%= loaihinh[i].MoTa%>"></td>
+                                    <td><button class="btn btn-primary" onclick="updateRow(this,'<%=loaihinh[i].MaLoaiHinh%>')">Cập Nhật</button> <button class="btn btn-danger" onclick="deleteRow(this,'<%=loaihinh[i].MaLoaiHinh%>')">Xóa</button></td>
+
+                                </tr>
+                                <%} %>
+                        </tbody>
+                    </table>
+                </div>
+                <%}%>
+        </div>
+    </div>
+    <script>
+        function deleteRow(obj, id) {
+            var r = confirm("Bạn có muốn xóa");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/loaihinhsanpham/delete/" + id,
+                    type: "post",
+                    data: {
+                        'id': id
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Xóa");
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function updateRow(obj, id) {
+            var ten = document.getElementById("inputUpdateTenLoaihinh" + id).value;
+            var mota = document.getElementById("inputUpdateMotaLoaihinh" + id).value;
+            var r = confirm("Bạn có muốn thay đổi");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/loaihinhsanpham/update",
+                    type: "post",
+                    data: {
+                        id: id,
+                        ten: ten,
+                        mota: mota
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Cập Nhật");
+                    }
+                });
+            }
+
+        }
+    </script>

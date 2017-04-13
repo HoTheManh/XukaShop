@@ -20,8 +20,21 @@ var singleclient = require('./routes/productclient');
 var layout = require('./routes/layoutclient');
 var order = require('./routes/order');
 var customer = require('./routes/customer');
+// routes admin
+var indexadmin = require('./routes/admin/index');
+var loaihinhadmin = require('./routes/admin/loaihinhsanpham');
+var loginadmin = require('./routes/admin/login');
+var loaisanphamadmin = require('./routes/admin/loaisanpham');
+var nhasanxuatadmin = require('./routes/admin/nhasanxuat');
+var sanphamadmin = require('./routes/admin/sanpham');
+var dathangadmin = require('./routes/admin/dathang');
+var chitietadmin = require('./routes/admin/chitietdathang');
+var khachhang = require('./routes/admin/khachhang');
+var hinhanh = require('./routes/admin/hinhanh');
 
 
+
+//------------------------------------------------------------
 var app = express();
 
 // view engine setup
@@ -63,6 +76,17 @@ app.use('/', loginclient);
 app.use('/', order);
 app.use('/', customer);
 
+// view admin-------------------------------
+app.use('/quanlyshop', indexadmin);
+app.use('/quanlyshop', loginadmin);
+app.use('/quanlyshop', loaihinhadmin);
+app.use('/quanlyshop', loaisanphamadmin);
+app.use('/quanlyshop', nhasanxuatadmin);
+app.use('/quanlyshop', sanphamadmin);
+app.use('/quanlyshop', dathangadmin);
+app.use('/quanlyshop', chitietadmin);
+app.use('/quanlyshop', khachhang);
+app.use('/quanlyshop', hinhanh);
 
 
 // catch 404 and forward to error handler
@@ -79,7 +103,6 @@ app.use(function(req, res, next) {
         console.log(errr);
         next(errr);
     });
-
 });
 
 
@@ -89,6 +112,7 @@ app.use(function(errr, req, res, next) {
     res.render('error', {
         title: 'XukaShop-Page Not Found'
     });
+    console.log(errr);
 });
 
 module.exports = app;

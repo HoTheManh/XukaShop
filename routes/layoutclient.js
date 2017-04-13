@@ -24,7 +24,6 @@ var getlayout = function(req, callback) {
                 if (req.session.user == 1) {
                     user = 1;
                 }
-
                 callback(menu, sub_menu, shop, cartlist, profile, user);
             });
         });

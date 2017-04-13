@@ -1,0 +1,134 @@
+<% layout('layoutadmin') -%>
+    <div class="grid-form">
+        <div class="grid-form1">
+            <h3>Loại sản phẩm</h3>
+            <div class="panel-body">
+                <form method="post" action="/quanlyshop/loaisanpham" role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tên loại</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" name="inputTenLoai" class="form-control1" placeholder="Tên loại" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Loại hình</label>
+                        <div class="col-md-8">
+                            <select name="selectloaihinh" class="form-control select select-primary select-block mbl" required>
+                            <% for(var j=0;j<loaihinhsp.length;j++ ){%>                                                   
+                              <option value="<%=loaihinhsp[j].MaLoaiHinh%>"><%= loaihinhsp[j].TenLoaiHinh%></option>        
+                            <%}%>                                 
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Mô tả</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control1" name="inputMota" placeholder="Mô tả">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <button class="btn-dark btn hvr-icon-float-away col-24">Thêm</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="grid-form1">
+            <h3 id="forms-inline">Thông Tin Chi Tiết</h3>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputName2">Tên Loại</label>
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="Nhập Tên">
+                </div>
+                <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+            </form>
+            <%if(loai.length>0){%>
+                <div id="table" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã Loại</th>
+                                <th>Tên Loại Hình</th>
+                                <th>Tên Loại</th>
+                                <th>Mô tả</th>
+                                <th>Tác Vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(var i=0;i<loai.length;i++ ){%>
+                                <tr>
+                                    <td>
+                                        <%= i+1%>
+                                    </td>
+                                    <td><input type="text" id="inputUpdateMaLoai<%= loai[i].MaLoai%>" class="form-control1" value="<%= loai[i].MaLoai%>" disabled></td>
+                                    <td><select id="inputUpdateMaLoaihinh<%= loai[i].MaLoai%>" class="form-control select select-primary select-block mbl">
+                                                <option value="<%= loai[i].LoaiHinh%>" selected><%= loai[i].TenLoaiHinh%></option>
+                                                 <% for(var j=0;j<loaihinhsp.length;j++ ){%>
+                                                     <%if (loaihinhsp[j].MaLoaiHinh!=loai[i].LoaiHinh){%>
+                                                      <option value="<%=loaihinhsp[j].MaLoaiHinh%>"><%= loaihinhsp[j].TenLoaiHinh%></option>
+                                                     <%}%>
+                                                <%}%>                                 
+                                            </select>
+                                    </td>
+                                    <td><input type="text" id="inputUpdateTenLoai<%= loai[i].MaLoai%>" name="inputUpdateTenLoai<%= loai[i].MaLoai%>" class="form-control1" value="<%= loai[i].TenLoai%>"></td>
+                                    <td><input type="text" id="inputUpdateMotaLoai<%= loai[i].MaLoai%>" class="form-control1" value="<%= loai[i].MoTa%>"></td>
+                                    <td><button class="btn btn-primary" onclick="updateRow(this,'<%=loai[i].MaLoai%>')">Cập Nhật</button> <button class="btn btn-danger" onclick="deleteRow(this,'<%=loai[i].MaLoai%>')">Xóa</button></td>
+                                </tr>
+                                <%} %>
+                        </tbody>
+                    </table>
+                </div>
+                <%}%>
+        </div>
+    </div>
+    <script>
+        function deleteRow(obj, id) {
+            var r = confirm("Bạn có muốn xóa");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/loaisanpham/delete",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Xóa");
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function updateRow(obj, id) {
+            var ten = document.getElementById("inputUpdateTenLoai" + id).value;
+            var element = document.getElementById("inputUpdateMaLoaihinh" + id);
+            var loaihinh = element.options[element.selectedIndex].value;
+            var mota = document.getElementById("inputUpdateMotaLoai" + id).value;
+            var r = confirm("Bạn có muốn thay đổi");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/loaisanpham/update",
+                    type: "post",
+                    data: {
+                        id: id,
+                        ten: ten,
+                        loaihinh: loaihinh,
+                        mota: mota
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Cập Nhật");
+                    }
+                });
+            }
+        }
+    </script>
