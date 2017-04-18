@@ -2,15 +2,13 @@ var connection = require('./connection');
 
 // lay thong tin shop
 var getShopInfo = function(callback) {
-    var query = 'select *from thongtinshop';
-    connection.query(query, function(err, rows) {
+    var query = "SELECT * FROM `thongtinshop`";
+    connection.query(query, function(err, row) {
         if (err) throw err;
-        callback(rows);
+        callback(row);
     });
 }
 
-
-
 module.exports = {
-    getShopInfo: getShopInfo
-}
+    getShopInfo: getShopInfo,
+};

@@ -8,7 +8,7 @@
                 <div class="form-group">
                     <label for="inputName" class="col-lg-4 control-label">Họ-Tên</label>
                     <div class="col-lg-4">
-                        <input type="text" class="form-control" name="inputName" value="<%= profile[0].HoTen%>" required>
+                        <input type="text" maxlength="60" class="form-control" name="inputName" value="<%= profile[0].HoTen%>" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -20,13 +20,13 @@
                 <div class="form-group">
                     <label for="inputemail" class="col-lg-4 control-label">Email</label>
                     <div class="col-lg-4">
-                        <input type="Email" class="form-control" name="inputemail" value="<%= profile[0].Email%>">
+                        <input type="Email" maxlength="60" class="form-control" name="inputemail" value="<%= profile[0].Email%>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputDiachi" class="col-lg-4 control-label">Địa Chỉ</label>
                     <div class="col-lg-4">
-                        <input type="text" class="form-control" name="inputDiachi" value="<%= profile[0].DiaChi%>" required>
+                        <input type="text" maxlength="150" class="form-control" name="inputDiachi" value="<%= profile[0].DiaChi%>" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-inverse">Cập Nhật</button>

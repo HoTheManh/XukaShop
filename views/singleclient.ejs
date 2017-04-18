@@ -1,92 +1,110 @@
 <% layout('layout') -%>
-<div id="content" class="container">
-   <div class="col-md-12 product-info">
-      <% if(sanpham1.length>=1) { %>
-      <div class="col-md-4 grid">
-         <div class="flexslider">
-            <ul class="slides">
-               <% hinh1.forEach(function (hinh1sp){%>
-               <li data-thumb="<%=hinh1sp.FileHinh%>">
-                  <div class="thumb-image"> <img src="<%=hinh1sp.FileHinh%>" data-imagezoom="true" class="img-responsive"> </div>
-               </li>
-               <% })%>
-            </ul>
-         </div>
-      </div>
-      <div class="col-md-6 product-content">
-      <form> 
-         <h4><%=sanpham1[0].TenSanPham%></h4>
-         <input type="hidden" name="tensp" value="<%=sanpham1[0].TenSanPham%>">
-         <% if (sanpham1[0].KhuyenMai!="có"){%>
-         <h4><%=parseFloat(sanpham1[0].GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</h4>
-         <input type="hidden" name="giasp" value="<%=sanpham1[0].GiaThuong%>">
-         <%}else {%>
-         <h5><%=parseFloat(sanpham1[0].GiaKhuyenMai).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</h5>
-         <input type="hidden" name="giasp" value="<%=sanpham1[0].GiaKhuyenMai%>">
-         <p style="text-decoration:line-through;"><%=parseFloat(sanpham1[0].GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</p>
-         <%}%>
-         <p>Mã sản phẩm: <%=sanpham1[0].MaSanPham%> </p>
-         <input type="hidden" name="masp" value="<%=sanpham1[0].MaSanPham%>">
-         <p><%=sanpham1[0].GioiThieu%> </p>
-         <p>Nhãn Hiệu: <%=sanpham1[0].ThuongHieu%></p>
-         <p>Nhà Cung Cấp: <%=sanpham1[0].NhaCungCap%></p>
-         </p>
-         <% if (sanpham1[0].TinhTrang=="true"){%>
-         <p>Tình trạng hàng: Còn Hàng</p>
-         </p>
-         <p><%=sanpham1[0].ThongTin%></p>
-         </p>
-         
-          <button type="submit" formmethod="post" formaction="/giohang"  class="btn btn-inverse">Đặt Hàng</button>
-         
-         <%}else {%>
-         <p>Tình trạng hàng: Hết Hàng</p>
-         <p><%=sanpham1[0].ThongTin%></p>
-         <%}%>
-        
-      </div>
-      <%}else{%>
-      <h4>Chưa có sản phẩm</h4>
-      <%}%> 
-      </form>    
-      </div>
+    <div id="content" class="container">
+        <div class="col-md-12 product-info">
+            <% if(sanpham1.length>=1) { %>
+                <div class="col-md-4 grid">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <% hinh1.forEach(function (hinh1sp){%>
+                                <li data-thumb="<%=hinh1sp.FileHinh%>">
+                                    <div class="thumb-image"> <img src="<%=hinh1sp.FileHinh%>" data-imagezoom="true" class="img-responsive"> </div>
+                                </li>
+                                <% })%>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 product-content">
+                    <form>
+                        <h4>
+                            <%=sanpham1[0].TenSanPham%>
+                        </h4>
+                        <input type="hidden" name="tensp" value="<%=sanpham1[0].TenSanPham%>">
+                        <% if (sanpham1[0].KhuyenMai!="có"){%>
+                            <h4>
+                                <%=parseFloat(sanpham1[0].GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</h4>
+                            <input type="hidden" name="giasp" value="<%=sanpham1[0].GiaThuong%>">
+                            <%}else {%>
+                                <h5>
+                                    <%=parseFloat(sanpham1[0].GiaKhuyenMai).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</h5>
+                                <input type="hidden" name="giasp" value="<%=sanpham1[0].GiaKhuyenMai%>">
+                                <p style="text-decoration:line-through;">
+                                    <%=parseFloat(sanpham1[0].GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</p>
+                                <%}%>
+                                    <p>Mã sản phẩm:
+                                        <%=sanpham1[0].MaSanPham%>
+                                    </p>
+                                    <input type="hidden" name="masp" value="<%=sanpham1[0].MaSanPham%>">
+                                    <p>
+                                        <%=sanpham1[0].GioiThieu%>
+                                    </p>
+                                    <p>Nhãn Hiệu:
+                                        <%=sanpham1[0].ThuongHieu%>
+                                    </p>
+                                    <%if (sanpham1[0].TinhTrang=="còn hàng"){%>
+                                        <p>Tình trạng hàng: Còn Hàng</p>
+                                        </p>
+                                        <p>
+                                            <%=sanpham1[0].ThongTin%>
+                                        </p>
+                                        </p>
+
+                                        <button type="submit" formmethod="post" formaction="/giohang" class="btn btn-inverse">Đặt Hàng</button>
+
+                                        <%}else {%>
+                                            <p>Tình trạng hàng: Hết Hàng</p>
+                                            <p>
+                                                <%=sanpham1[0].ThongTin%>
+                                            </p>
+                                            <%}%>
+
+                </div>
+                <%}else{%>
+                    <h4>Chưa có sản phẩm</h4>
+                    <%}%>
+                        </form>
+        </div>
         <div class="col-md-12 product-new">
-         <% if(sanphamcungloai.length>0) { %>
-  <h4>Sản phẩm cùng loại</h4> 
-               <% for (var i=0;i<sanphamcungloai.length;i++){%>
-		<div class="col-md-3 col-xs-6">
-         <div class="thumbnail">
-            <% if(hinhcungloai.length>0) { %>
-            
-            <% for (var j=0;j<hinhcungloai.length;j++){%>
-            <% if(hinhcungloai[j].Mahang==sanphamcungloai[i].MaSanPham){%>
-            <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>"> <img src="<%=hinhcungloai[j].FileHinh%>" class="img-responsive" alt="..."></a>
-            <%break ;}%>
-            <% } %>
-             <%}else {%>
-             <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>"> <img src="  " class="img-responsive" alt="..."></a> 
-              <%} %>
+            <% if(sanphamcungloai.length>0) { %>
+                <h4>Sản phẩm cùng loại</h4>
+                <% for (var i=0;i<sanphamcungloai.length;i++){%>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="thumbnail">
+                            <% if(hinhcungloai.length>0) { %>
 
-            <div class="caption">
-               <div id="name">
-                 <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>">
-                     <h5><%=sanphamcungloai[i].TenSanPham%></h5>
-                  </a>
-               </div>
-              <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>">
-                  <p><%= parseFloat(sanphamcungloai[i].GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
-               </a>
-            </div>
-         </div>
-		 
-      </div>
-      <% } %> 
-        <%}else {%> <h4></h4> <%} %>      
-   </div>
-</div>
-</div>
+                                <% for (var j=0;j<hinhcungloai.length;j++){%>
+                                    <% if(hinhcungloai[j].Mahang==sanphamcungloai[i].MaSanPham){%>
+                                        <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>"> <img src="<%=hinhcungloai[j].FileHinh%>" class="img-responsive" alt="..."></a>
+                                        <%break ;}%>
+                                            <% } %>
+                                                <%}else {%>
+                                                    <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>"> <img src="  " class="img-responsive" alt="..."></a>
+                                                    <%} %>
 
-<%
+                                                        <div class="caption">
+                                                            <div id="name">
+                                                                <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>">
+                                                                    <h5>
+                                                                        <%=sanphamcungloai[i].TenSanPham%>
+                                                                    </h5>
+                                                                </a>
+                                                            </div>
+                                                            <a href="/sanpham/<%=chuyenKhongDau(sanphamcungloai[i].TenSanPham)%>/<%=sanphamcungloai[i].MaSanPham%>">
+                                                                <p>
+                                                                    <%= parseFloat(sanphamcungloai[i].GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+                                                            </a>
+                                                        </div>
+                        </div>
+
+                    </div>
+                    <% } %>
+                        <%}else {%>
+                            <h4></h4>
+                            <%} %>
+        </div>
+    </div>
+    </div>
+
+    <%
    function chuyenKhongDau(alias) {
       var str = alias;
       str = str.toLowerCase();

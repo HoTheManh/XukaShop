@@ -1,58 +1,128 @@
 <% layout('layoutadmin') -%>
+
     <div class="grid-form">
         <div class="grid-form1">
-            <h3>Thêm mới</h3>
+            <h3>Loại sản phẩm</h3>
             <div class="panel-body">
-                <form role="form" class="form-horizontal">
+                <form method="post" action="/quanlyshop/sanpham/add" role="form" class="form-horizontal" enctype='multipart/form-data'>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Email Address</label>
+                        <label class="col-md-2 control-label">Tên sản phẩm</label>
                         <div class="col-md-8">
                             <div class="input-group">
-                                <span class="input-group-addon">
-										<i class="fa fa-envelope-o"></i>
-									</span>
-                                <input type="text" class="form-control1" placeholder="Email Address">
+                                <input type="text" name="inputTenSP" class="form-control1" placeholder="Tên sản phẩm" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Password</label>
+                        <label class="col-md-2 control-label">Loại sản phẩm</label>
+                        <div class="col-md-8">
+                            <select name="selectLoaiSP" class="form-control select select-primary select-block mbl" required>
+                                <% loaihinh.forEach(function(loaihinhitem){%>
+                            <optgroup label="<%=loaihinhitem.TenLoaiHinh%>">
+                                 <% loaihanghoa.forEach(function(loaihanghoaitem){%>
+                                     <% if (loaihinhitem.MaLoaiHinh==loaihanghoaitem.LoaiHinh) {%>
+                                <option value="<%= loaihanghoaitem.MaLoai %>"><%= loaihanghoaitem.TenLoai %></option>
+                                 <%}%>  
+                                  <%})%>  
+                            </optgroup> 
+                            <%})%>                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Xuất xứ</label>
                         <div class="col-md-8">
                             <div class="input-group">
-                                <span class="input-group-addon">
-										<i class="fa fa-key"></i>
-									</span>
-                                <input type="password" class="form-control1" id="exampleInputPassword1" placeholder="Password">
+                                <input type="text" class="form-control1" name="inputXuatXuSP" placeholder="Xuất xứ">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Email Address</label>
+                        <label class="col-md-2 control-label">Giá thường</label>
                         <div class="col-md-8">
-                            <div class="input-group input-icon right">
-                                <span class="input-group-addon">
-										<i class="fa fa-envelope-o"></i>
-									</span>
-                                <input id="email" class="form-control1" type="text" placeholder="Email Address">
+                            <div class="input-group">
+                                <input type="number" min="0" ax="99999999" class="form-control1" name="inputGiaThuongSP">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Password</label>
+                        <label class="col-md-2 control-label">Giá khuyến mãi</label>
                         <div class="col-md-8">
-                            <div class="input-group input-icon right">
-                                <span class="input-group-addon">
-										<i class="fa fa-key"></i>
-									</span>
-                                <input type="password" class="form-control1" placeholder="Password">
+                            <div class="input-group">
+                                <input type="number" min="0" max="99999999" class="form-control1" name="inputGiaKhuyenMaiSP">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Giới thiệu</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <textarea style="height: 150px;" type="text" class="form-control1" name="inputGioiThieuSP" placeholder="Giới thiệu"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Nhà Cung Cấp</label>
+                        <div class="col-md-8">
+                            <select name="selectNCCSP" class="form-control select select-primary select-block mbl" required>
+                                <% for(var i=0;i<ncc.length;i++ ){%>                                                   
+                              <option value="<%=ncc[i].MaNhaCungCap%>"><%= ncc[i].TenNhaCungCap%></option>        
+                            <%}%>                   
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tình trạng hàng</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="checkbox" name="inputTinhTrangSP" value="còn hàng"> Còn hàng<br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Thông tin</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <textarea rows="5" type="text" class="form-control1" style="height: 150px;" name="inputThongTinSP"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Khuyến mãi</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="checkbox" name="inputKhuyenMaiSP" value="có"> Có<br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Thương hiệu</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control1" name="inputThuongHieuSP" placeholder="Thương hiệu">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Banner</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="checkbox" name="inputBannerSP" value="true" checked> Có<br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Hình Banner</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="file" name="inputHinhSP" accept="image/*">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-8 col-sm-offset-2">
-                                <button class="btn-dark btn hvr-icon-float-away col-24">Thêm</button>
-                                <button class=" btn hvr-icon-spin col-5">Xóa Trắng</button>
+                                <button type="submit" class="btn-dark btn hvr-icon-float-away col-24">Thêm</button>
                             </div>
                         </div>
                     </div>
@@ -63,35 +133,312 @@
             <h3 id="forms-inline">Thông Tin Chi Tiết</h3>
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="exampleInputName2">Tên Loại Hình</label>
+                    <label for="exampleInputName2">Tên Loại</label>
                     <input type="text" class="form-control" id="exampleInputName2" placeholder="Nhập Tên">
                 </div>
                 <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
             </form>
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Mã Loại Hình</th>
-                            <th>Tên Loại Hình</th>
-                            <th>Mô tả</th>
-                            <th>Tác Vụ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Anna</td>
-                            <td>Pitt</td>
-                            <td>35</td>
-                            <td><button class="btn btn-primary">Cập Nhật</button> <button class="btn btn-danger">Xóa</button></td>
-
-                        </tr>
-
-
+            <%if(sanpham.length>0){%>
+                <div id="table" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá thường</th>
+                                <th>Giá khuyến mãi</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Khuyến mãi</th>
+                                <th>Tình Trạng</th>
+                                <th>Thương hiệu</th>
+                                <th>Nhà cung cấp</th>
+                                <th>Lượt mua</th>
+                                <th>Banner</th>
+                                <th>Hình Banner</th>
+                                <th>Tác Vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(var i=0;i<sanpham.length;i++ ){%>
+                                <tr>
+                                    <td>
+                                        <%= i+1%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].MaSanPham%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].TenSanPham%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].GiaThuong%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].GiaKhuyenMai%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].TenLoai%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].KhuyenMai%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].TinhTrang%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].ThuongHieu%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].TenNhaCungCap%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].LuotMua%>
+                                    </td>
+                                    <td>
+                                        <%=sanpham[i].Banner%>
+                                    </td>
+                                    <td>
+                                        <img src="<%=sanpham[i].HinhBanner%>" class="img-responsive">
+                                    </td>
+                                    <td><button class="btn btn-primary" data-toggle="modal" data-target="#Modalsanpham<%=sanpham[i].MaSanPham%>">Cập Nhật</button> <button class="btn btn-danger" onclick="deleteRow(this,'<%=sanpham[i].MaSanPham%>')">Xóa</button></td>
+                                </tr>
+                                <div class="modal fade" id="Modalsanpham<%=sanpham[i].MaSanPham%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    <%=sanpham[i].TenSanPham%>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" action="/quanlyshop/sanpham/update/<%=sanpham[i].MaSanPham%>" role="form" class="form-horizontal" enctype='multipart/form-data'>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Mã sản phẩm</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="text" name="inputupdateMaSP" class="form-control1" value="<%=sanpham[i].MaSanPham%>" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Tên sản phẩm</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="text" name="inputupdateTenSP" class="form-control1" value=" <%=sanpham[i].TenSanPham%>" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Loại sản phẩm</label>
+                                                        <div class="col-md-9">
+                                                            <select name="selectupdateLoaiSP" class="form-control select select-primary select-block mbl" required>
+                                                                <% loaihinh.forEach(function(loaihinhitem){%>
+                                                            <optgroup label="<%=loaihinhitem.TenLoaiHinh%>">
+                                                                <% loaihanghoa.forEach(function(loaihanghoaitem){%>
+                                                                    <% if (loaihinhitem.MaLoaiHinh==loaihanghoaitem.LoaiHinh) {%>
+                                                                <option value="<%= loaihanghoaitem.MaLoai %>"><%= loaihanghoaitem.TenLoai %></option>
+                                                                <%}%>  
+                                                                <%})%>  
+                                                            </optgroup> 
+                                                            <%})%>                           
+                                                        </select>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Xuất xứ</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control1" name="inputupdateXuatXuSP" value="<%=sanpham[i].XuatXu%>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Giá thường</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="number" min="0" ax="99999999" class="form-control1" value="<%=sanpham[i].GiaThuong%>" name="inputupdateGiaThuongSP">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Giá khuyến mãi</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="number" min="0" max="99999999" class="form-control1" value="<%=sanpham[i].GiaKhuyenMai%>" name="inputupdateGiaKhuyenMaiSP">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Giới thiệu</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <textarea style="height: 150px;" type="text" class="form-control1" name="inputupdateGioiThieuSP"><%=sanpham[i].GioiThieu%></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Nhà Cung Cấp</label>
+                                                        <div class="col-md-9">
+                                                            <select name="selectupdateNCCSP" class="form-control select select-primary select-block mbl" required>
+                                                                <% for(var j=0;j<ncc.length;j++ ){%>                                                   
+                                                            <option value="<%=ncc[j].MaNhaCungCap%>"><%= ncc[j].TenNhaCungCap%></option>        
+                                                            <%}%>                   
+                                                        </select>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Tình trạng hàng</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="checkbox" name="inputupdateTinhTrangSP" value="còn hàng"> Còn hàng<br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Thông tin</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <textarea rows="5" type="text" class="form-control1" style="height: 150px;" name="inputupdateThongTinSP"><%=sanpham[i].ThongTin%></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Khuyến mãi</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="checkbox" name="inputupdateKhuyenMaiSP" value="có"> Có<br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Thương hiệu</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control1" name="inputupdateThuongHieuSP" value=" <%=sanpham[i].ThuongHieu%>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Banner</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="checkbox" name="inputupdateBannerSP" value="true" checked> Có<br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Hình Banner</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="file" name="inputupdateHinhSP" accept="image/*">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-sm-8 col-sm-offset-2">
+                                                                <button type="submit" class="btn-dark btn hvr-icon-float-away col-24">Lưu</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+                <%} %>
                     </tbody>
-                </table>
-            </div>
+                    </table>
         </div>
+        <%}%>
     </div>
+    <div class="col-md-12">
+        <% if (pageCount > 1) { %>
+            <ul class="pager">
+                <% if (currentPage > 1) { %>
+                    <li><a href="/quanlyshop/sanpham/?page=1">&laquo;</a></li>
+                    <% } %>
+                        <% var i = 1;
+	            if (currentPage > 5) {
+	                i = +currentPage - 4;
+	            } %>
+                            <% if (i !== 1) { %>
+                                <li class="disabled"><a href="#">...</a></li>
+                                <% } %>
+                                    <% for (i; i<=pageCount; i++) { %>
+                                        <% if (currentPage == i) { %>
+                                            <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span>
+                                            </li>
+                                            <% } else { %>
+                                                <li>
+                                                    <a href="/quanlyshop/sanpham?page=<%= i %>">
+                                                        <%= i %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <% if (i == (+currentPage + 4)) { %>
+                                                        <li class="disabled"><a href="#">...</a></li>
+                                                        <% break; } %>
+                                                            <% } %>
+                                                                <% if (currentPage != pageCount) { %>
+                                                                    <li><a href="/quanlyshop/sanpham?page=<%= pageCount %>">&raquo;</a></li>
+                                                                    <% } %>
+            </ul>
+            <% } %>
+    </div>
+    </div>
+    <script>
+        function deleteRow(obj, id) {
+            var r = confirm("Bạn có muốn xóa");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/sanpham/delete",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Xóa");
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function updateRow(obj, id) {
+            var ten = document.getElementById("inputUpdateTenLoai" + id).value;
+            var element = document.getElementById("inputUpdateMaLoaihinh" + id);
+            var loaihinh = element.options[element.selectedIndex].value;
+            var mota = document.getElementById("inputUpdateMotaLoai" + id).value;
+            var r = confirm("Bạn có muốn thay đổi");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/loaisanpham/update",
+                    type: "post",
+                    data: {
+                        id: id,
+                        ten: ten,
+                        loaihinh: loaihinh,
+                        mota: mota
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Cập Nhật");
+                    }
+                });
+            }
+        }
+    </script>

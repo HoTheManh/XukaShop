@@ -2,11 +2,16 @@ var connection = require('./connection');
 
 
 var kytudac_biet = function(query) {
-        var str = query;
-        str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|`|{|}|\||\\/g, "");
-        str = str.replace(/ + /g, "");
-        str = str.trim();
-        return (str);
+        if (query == null || query == "") {
+            var str = " ";
+            return (str);
+        } else {
+            var str = query;
+            str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|`|{|}|\||\\/g, "");
+            str = str.replace(/ + /g, "");
+            str = str.trim();
+            return (str);
+        }
     }
     // lay danh sach loaisanpham
 var getLoai = function(callback) {
@@ -18,16 +23,12 @@ var getLoai = function(callback) {
     }
     /// thêm loại sản phẩm
 var addLoai = function(loai) {
-    if (loai.inputTenLoai != null || loai.inputTenLoai != "") {
-        var tenloai = kytudac_biet(loai.inputTenLoai);
-    } else {
-        var tenloai = "";
-    }
-    if (loai.inputMota != null) {
-        var mota = kytudac_biet(loai.inputMota);
-    } else {
-        var mota = "";
-    }
+
+    var tenloai = kytudac_biet(loai.inputTenLoai);
+
+
+    var mota = kytudac_biet(loai.inputMota);
+
     var query = "INSERT INTO `loaihanghoa` (`MaLoai`, `TenLoai`, `LoaiHinh`, `MoTa`) VALUES (NULL, '" + tenloai + "', '" + loai.selectloaihinh + "', '" + mota + "');";
     connection.query(query, function(err) {
         if (err) console.log('fail');
@@ -36,16 +37,11 @@ var addLoai = function(loai) {
 };
 // cập nhật loại sản phẩm
 var updateLoai = function(id, ten, loaihinh, mota) {
-    if (ten != null || ten != "") {
-        var tenloaihinh = kytudac_biet(ten);
-    } else {
-        var tenloaihinh = "";
-    }
-    if (mota != null) {
-        var mota = kytudac_biet(mota);
-    } else {
-        var mota = "";
-    }
+
+    var tenloaihinh = kytudac_biet(ten);
+
+    var mota = kytudac_biet(mota);
+
     var query = "UPDATE `loaihanghoa` SET `TenLoai` = '" + ten + "',`LoaiHinh` = '" + loaihinh + "', `MoTa` = '" + mota + "' WHERE `loaihanghoa`.`MaLoai` = " + id + ";";
     console.log(query)
     connection.query(query, function(err, rows) {

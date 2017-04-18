@@ -8,7 +8,6 @@ router.get('/loaihinhsanpham', function(req, res) {
     loaihinh.getLoaiHinh(function(loaihinh) {
         res.render('admin/loaihinh', {
             title: 'XukaShop-Admin',
-            loaihinh: loaihinh
         });
     });
 });

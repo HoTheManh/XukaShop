@@ -1,0 +1,138 @@
+<% layout('layoutadmin') -%>
+    <div class="grid-form">
+        <div class="grid-form1">
+            <h3>Nhà cung cấp sản phẩm</h3>
+            <div class="panel-body">
+                <form method="post" action="/quanlyshop/nhacungcap" role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tên nhà cung cấp</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" name="inputTenNhacungcap" class="form-control1" placeholder="Tên nhà cung cấp" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Số điện thoại</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control1" name="inputSDTNhacungcap" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Địa chỉ</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control1" name="inputDiaChiNhacungcap" placeholder="Địa chỉ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Ghi chú</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control1" name="inputGhiChuNhacungcap" placeholder="Ghi chú">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <button class="btn-dark btn hvr-icon-float-away col-24">Thêm</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="grid-form1">
+            <h3 id="forms-inline">Thông Tin Chi Tiết</h3>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputName2">Tên Loại Hình</label>
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="Nhập Tên">
+                </div>
+                <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+            </form>
+            <%if(ncc.length>0){%>
+                <div id="table" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã</th>
+                                <th>Tên Nhà Cung Cấp</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Địa Chỉ</th>
+                                <th>Ghi Chú</th>
+                                <th>Tác Vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(var i=0;i<ncc.length;i++ ){%>
+                                <tr>
+
+                                    <td>
+                                        <%= i+1%>
+                                    </td>
+                                    <td><input type="text" id="inputUpdateMaNhaCungCap<%= ncc[i].MaNhaCungCap%>" style="width: 60px;" class="form-control1" value="<%= ncc[i].MaNhaCungCap%>" disabled></td>
+                                    <td><input type="text" id="inputUpdateTenNhaCungCap<%= ncc[i].MaNhaCungCap%>" class="form-control1" value="<%= ncc[i].TenNhaCungCap%>"></td>
+                                    <td><input type="text" id="inputUpdateSDT<%= ncc[i].MaNhaCungCap%>" class="form-control1" value="<%= ncc[i].SDT%>"></td>
+                                    <td><textarea cols="40" rows="5" type="text" id="inputUpdateDiaChi<%= ncc[i].MaNhaCungCap%>" style="height: 90px;" class="form-control1"><%= ncc[i].DiaChi%></textarea></td>
+                                    <td><input type="text" id="inputUpdateGhichu<%= ncc[i].MaNhaCungCap%>" class="form-control1" value="<%= ncc[i].GhiChu%>"></td>
+                                    <td><button class="btn btn-primary" onclick="updateRow(this,'<%=ncc[i].MaNhaCungCap%>')">Cập Nhật</button> <button class="btn btn-danger" onclick="deleteRow(this,'<%=ncc[i].MaNhaCungCap%>')">Xóa</button></td>
+
+                                </tr>
+                                <%} %>
+                        </tbody>
+                    </table>
+                </div>
+                <%}%>
+        </div>
+    </div>
+    <script>
+        function deleteRow(obj, id) {
+            var r = confirm("Bạn có muốn xóa");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/nhacungcap/delete/" + id,
+                    type: "post",
+                    data: {
+                        'id': id
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Xóa");
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function updateRow(obj, id) {
+            var ten = document.getElementById("inputUpdateTenNhaCungCap" + id).value;
+            var sdt = document.getElementById("inputUpdateSDT" + id).value;
+            var diachi = document.getElementById("inputUpdateDiaChi" + id).value;
+            var ghichu = document.getElementById("inputUpdateGhichu" + id).value;
+            var r = confirm("Bạn có muốn thay đổi");
+            if (r == true) {
+                $.ajax({
+                    url: "/quanlyshop/nhacungcap/update",
+                    type: "post",
+                    data: {
+                        id: id,
+                        ten: ten,
+                        diachi: diachi,
+                        sdt: sdt,
+                        ghichu: ghichu
+                    },
+                    success: function(data) {
+                        $('#table').load(document.URL + ' #table');
+                        alert("Đã Cập Nhật");
+                    }
+                });
+            }
+
+        }
+    </script>

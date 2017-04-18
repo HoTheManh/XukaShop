@@ -9,8 +9,6 @@ router.get('/loaisanpham', function(req, res) {
         loaisanpham.getLoai(function(loai) {
             res.render('admin/loaisanpham', {
                 title: 'XukaShop-Admin',
-                loai: loai,
-                loaihinhsp: loaihinhsp
             });
         });
     })

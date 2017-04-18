@@ -9,7 +9,7 @@ var shop = require('../models/ShopInfo')
 var getlayout = function(req, callback) {
     loaihinh.getLoaiHinh(function(menu) {
         loaihanghoa.getLoai(function(sub_menu) {
-            shop.getShopInfo(function(shop) {
+            shop.getShopInfo(function(shopinfo) {
                 var cartlist = [];
                 var profile = [];
                 var user = 0;
@@ -24,13 +24,12 @@ var getlayout = function(req, callback) {
                 if (req.session.user == 1) {
                     user = 1;
                 }
-                callback(menu, sub_menu, shop, cartlist, profile, user);
+                callback(menu, sub_menu, shopinfo, cartlist, profile, user);
             });
         });
     });
-};
+}
 
 module.exports = {
-    getlayout: getlayout,
-
+    getlayout: getlayout
 };

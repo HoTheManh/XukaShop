@@ -16,8 +16,8 @@
                         <label class="col-md-2 control-label">Loại hình</label>
                         <div class="col-md-8">
                             <select name="selectloaihinh" class="form-control select select-primary select-block mbl" required>
-                            <% for(var j=0;j<loaihinhsp.length;j++ ){%>                                                   
-                              <option value="<%=loaihinhsp[j].MaLoaiHinh%>"><%= loaihinhsp[j].TenLoaiHinh%></option>        
+                            <% for(var j=0;j<loaihinh.length;j++ ){%>                                                   
+                              <option value="<%=loaihinh[j].MaLoaiHinh%>"><%= loaihinh[j].TenLoaiHinh%></option>        
                             <%}%>                                 
                         </select>
                         </div>
@@ -49,7 +49,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
             </form>
-            <%if(loai.length>0){%>
+            <%if(loaihanghoa.length>0){%>
                 <div id="table" class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <thead>
@@ -63,24 +63,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%for(var i=0;i<loai.length;i++ ){%>
+                            <%for(var i=0;i<loaihanghoa.length;i++ ){%>
                                 <tr>
                                     <td>
                                         <%= i+1%>
                                     </td>
-                                    <td><input type="text" id="inputUpdateMaLoai<%= loai[i].MaLoai%>" class="form-control1" value="<%= loai[i].MaLoai%>" disabled></td>
-                                    <td><select id="inputUpdateMaLoaihinh<%= loai[i].MaLoai%>" class="form-control select select-primary select-block mbl">
-                                                <option value="<%= loai[i].LoaiHinh%>" selected><%= loai[i].TenLoaiHinh%></option>
-                                                 <% for(var j=0;j<loaihinhsp.length;j++ ){%>
-                                                     <%if (loaihinhsp[j].MaLoaiHinh!=loai[i].LoaiHinh){%>
-                                                      <option value="<%=loaihinhsp[j].MaLoaiHinh%>"><%= loaihinhsp[j].TenLoaiHinh%></option>
+                                    <td><input style="width: 50px;" type="text" id="inputUpdateMaLoai<%= loaihanghoa[i].MaLoai%>" class="form-control1" value="<%= loaihanghoa[i].MaLoai%>" disabled></td>
+                                    <td><select style="min-width:100px; ;" id="inputUpdateMaLoaihinh<%= loaihanghoa[i].MaLoai%>" class="form-control select select-primary select-block mbl">
+                                                <option value="<%= loaihanghoa[i].LoaiHinh%>" selected><%= loaihanghoa[i].TenLoaiHinh%></option>
+                                                 <% for(var j=0;j<loaihinh.length;j++ ){%>
+                                                     <%if (loaihinh[j].MaLoaiHinh!=loaihanghoa[i].LoaiHinh){%>
+                                                      <option value="<%=loaihinh[j].MaLoaiHinh%>"><%= loaihinh[j].TenLoaiHinh%></option>
                                                      <%}%>
                                                 <%}%>                                 
                                             </select>
                                     </td>
-                                    <td><input type="text" id="inputUpdateTenLoai<%= loai[i].MaLoai%>" name="inputUpdateTenLoai<%= loai[i].MaLoai%>" class="form-control1" value="<%= loai[i].TenLoai%>"></td>
-                                    <td><input type="text" id="inputUpdateMotaLoai<%= loai[i].MaLoai%>" class="form-control1" value="<%= loai[i].MoTa%>"></td>
-                                    <td><button class="btn btn-primary" onclick="updateRow(this,'<%=loai[i].MaLoai%>')">Cập Nhật</button> <button class="btn btn-danger" onclick="deleteRow(this,'<%=loai[i].MaLoai%>')">Xóa</button></td>
+                                    <td><input type="text" id="inputUpdateTenLoai<%= loaihanghoa[i].MaLoai%>" name="inputUpdateTenLoai<%= loaihanghoa[i].MaLoai%>" class="form-control1" value="<%= loaihanghoa[i].TenLoai%>"></td>
+                                    <td><input type="text" id="inputUpdateMotaLoai<%= loaihanghoa[i].MaLoai%>" class="form-control1" value="<%= loaihanghoa[i].MoTa%>"></td>
+                                    <td><button class="btn btn-primary" onclick="updateRow(this,'<%=loaihanghoa[i].MaLoai%>')">Cập Nhật</button> <button class="btn btn-danger" onclick="deleteRow(this,'<%=loaihanghoa[i].MaLoai%>')">Xóa</button></td>
                                 </tr>
                                 <%} %>
                         </tbody>

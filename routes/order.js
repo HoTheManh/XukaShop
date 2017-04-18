@@ -22,7 +22,6 @@ router.get('/dathang/checkout', function(req, res) {
     }
 });
 
-
 // sau khi khách hàng nhập thông tin
 router.get('/dathang/hoantat', function(req, res) {
     if (req.session.profile == null) {

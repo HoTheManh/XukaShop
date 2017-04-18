@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var crypto = require('crypto-js');
+const fileUpload = require('express-fileupload');
 // khai báo connect----------------------------------------
 var mysql = require('mysql')
 
@@ -29,8 +30,10 @@ var nhasanxuatadmin = require('./routes/admin/nhasanxuat');
 var sanphamadmin = require('./routes/admin/sanpham');
 var dathangadmin = require('./routes/admin/dathang');
 var chitietadmin = require('./routes/admin/chitietdathang');
-var khachhang = require('./routes/admin/khachhang');
 var hinhanh = require('./routes/admin/hinhanh');
+var layoutadmin = require('./routes/admin/layoutadmin');
+
+
 
 
 
@@ -49,21 +52,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(fileUpload());
 app.use(session({
     secret: 'XukaShop',
     resave: true,
     saveUninitialized: true
 }));
-app.use(function(req, res, next) {
-    layout.getlayout(req, function(menu, sub_menu, shop, cartlist, profile, user) {
-        res.locals.menu = menu;
-        res.locals.sub_menu = sub_menu;
-        res.locals.shop = shop;
-        res.locals.giohang = cartlist;
-        res.locals.profile = profile;
-        res.locals.users = user;
-        next();
+app.use('/', function(req, res, next) {
+    layout.getlayout(req, function(loaihinh, loaihanghoa, shopinfo, cartlist, profile, user) {
+        layoutadmin.getlayout(req, function(admin, ncc) {
+            res.locals.loaihinh = loaihinh;
+            res.locals.loaihanghoa = loaihanghoa;
+            res.locals.shop = shopinfo;
+            res.locals.giohang = cartlist;
+            res.locals.profile = profile;
+            res.locals.users = user;
+            res.locals.admin = admin;
+            res.locals.ncc = ncc;
+            next();
+        });
     });
 });
 /// dùng view-----------------------------------------------
@@ -85,27 +92,16 @@ app.use('/quanlyshop', nhasanxuatadmin);
 app.use('/quanlyshop', sanphamadmin);
 app.use('/quanlyshop', dathangadmin);
 app.use('/quanlyshop', chitietadmin);
-app.use('/quanlyshop', khachhang);
 app.use('/quanlyshop', hinhanh);
 
 
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    layout.getlayout(req, function(menu, sub_menu, shop, cartlist, profile, user) {
-        res.locals.menu = menu;
-        res.locals.sub_menu = sub_menu;
-        res.locals.shop = shop;
-        res.locals.giohang = cartlist;
-        res.locals.profile = profile;
-        res.locals.users = user;
-        var errr = new Error('Not Found');
-        errr.status = 404;
-        console.log(errr);
-        next(errr);
-    });
+app.use('/', function(req, res, next) {
+    var errr = new Error('Not Found');
+    errr.status = 404;
+    next(errr);
 });
-
-
 
 app.use(function(errr, req, res, next) {
     res.status(errr.status || 500);
@@ -114,5 +110,4 @@ app.use(function(errr, req, res, next) {
     });
     console.log(errr);
 });
-
 module.exports = app;

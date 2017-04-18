@@ -4,11 +4,16 @@ var crypto = require('crypto-js');
 
 // xử lý ký tự đặc biệt
 var kytudac_biet = function(query) {
-    var str = query;
-    str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|`|{|}|\||\\/g, "");
-    str = str.replace(/ + /g, "");
-    str = str.trim();
-    return (str);
+    if (query == null || query == "") {
+        var str = " ";
+        return (str);
+    } else {
+        var str = query;
+        str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|`|{|}|\||\\/g, "");
+        str = str.replace(/ + /g, "");
+        str = str.trim();
+        return (str);
+    }
 }
 
 // mã hóa mật khẩu
@@ -56,16 +61,10 @@ var loginCustomer = function(user, callback) {
 
 
 var checkCustomer = function(user, callback) {
-    if (user.inputemail != null || customer.inputemail != "") {
-        var Email = "'" + kytudac_biet(user.inputemail) + "'";
-    } else {
-        var Email = "''";
-    }
-    if (user.inputTaikhoan != null) {
-        var UserName = "'" + kytudac_biet(user.inputTaikhoan) + "'";
-    } else {
-        var UserName = "''";
-    }
+
+    var Email = "'" + kytudac_biet(user.inputemail) + "'";
+
+    var UserName = "'" + kytudac_biet(user.inputTaikhoan) + "'";
     var query = "SELECT COUNT(MaKhachhang) as tontai from khachhang where  (username=" + UserName + ") or (Email=" + Email + ")";
     console.log(query);
     connection.query(query, function(err, rows) {
@@ -106,13 +105,8 @@ var insertCustomer = function(customer, callback) {
             } else {
                 var UserName = null;
             }
-            if (customer.inputPassword != null) {
-                var Password = kytudac_biet(customer.inputPassword);
-                var password_code = mahoa(Password);
-            } else {
-                var Password = "";
-                var password_code = mahoa(Password);
-            }
+            var Password = kytudac_biet(customer.inputPassword);
+            var password_code = mahoa(Password);
             var Diachi = kytudac_biet(customer.inputDiachi);
             query = "INSERT INTO `khachhang` (`MaKhachhang`, `HoTen`, `SDT`, `Email`, `DiaChi`, `UserName`, `Password`) VALUES (NULL, '" + HoTen + "', '" + SDT + "', " + Email + ", '" + Diachi + "', " + UserName + ", '" + password_code + "')";
             console.log(query);

@@ -1,101 +1,117 @@
 <% layout('layout') -%>
-<div id="content" class="container-fluid">
-   <div class="col-md-12">
-      <div class="col-md-4 cagetory">
-         <h4>Danh mục sản phẩm</h4>
-         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <% menu.forEach(function(_menu){%>
-            <div class="menu">
-               <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= _menu.MaLoaiHinh%>" aria-expanded="true" aria-controls="collapseOne<%= _menu.MaLoaiHinh%>">
-                     <%= _menu.TenLoaiHinh%>
-                     </a>
-                  </h4>
-               </div>
-               <div id="collapseOne<%= _menu.MaLoaiHinh%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                  <div class=".list-group">
-                     <ul class="cute">
-                        <% sub_menu.forEach(function(_sub_menu){%>
-                        <% if (_menu.MaLoaiHinh==_sub_menu.LoaiHinh) {%>
-                        <li class="subitem"><a href="/danhmuc/<%=chuyenKhongDau(_sub_menu.TenLoai) %>/<%=_sub_menu.MaLoai %>"><%= _sub_menu.TenLoai %></a></li>
-                        <% } %>
+    <div id="content" class="container-fluid">
+        <div class="col-md-12">
+            <div class="col-md-4 cagetory">
+                <h4>Danh mục sản phẩm</h4>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <% loaihinh.forEach(function(_menu){%>
+                        <div class="menu">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<%= _menu.MaLoaiHinh%>" aria-expanded="true" aria-controls="collapseOne<%= _menu.MaLoaiHinh%>">
+                                        <%= _menu.TenLoaiHinh%>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne<%= _menu.MaLoaiHinh%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class=".list-group">
+                                    <ul class="cute">
+                                        <% loaihanghoa.forEach(function(_sub_menu){%>
+                                            <% if (_menu.MaLoaiHinh==_sub_menu.LoaiHinh) {%>
+                                                <li class="subitem">
+                                                    <a href="/danhmuc/<%=chuyenKhongDau(_sub_menu.TenLoai) %>/<%=_sub_menu.MaLoai %>">
+                                                        <%= _sub_menu.TenLoai %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <%  })%>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <%  })%>
-                     </ul>
-                  </div>
-               </div>
+                </div>
             </div>
-            <%  })%> 
-         </div>
-      </div>
-      <div class="col-md-8">
-         <div class="product-new col-md-12">
-            <% if(sanpham.length>=1) { %>
-            <h4><%= sanpham[0].TenLoai%></h4>
-            <% sanpham.forEach(function(sp){%>
-            <div class="col-md-4 col-xs-6">
-               <div class="thumbnail">
-                  <% for (var i=0;i<hinh.length;i++){%>
-                  <% if(hinh[i].Mahang==sp.MaSanPham){%>
-                  <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>"> <img src="<%=hinh[i].FileHinh%>" class="img-responsive" alt="..."></a>
-                  <%break ;}%>
-                  <% } %>
-                  <div class="caption">
-                     <div id="name">
-                        <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>">
-                           <h5><%=sp.TenSanPham%></h5>
-                        </a>
-                     </div>
-                             <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>">
-         <% if (sp.KhuyenMai!="có"){%>
-         <p><%= parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
-         <%}else {%>
-         <p><%= parseFloat(sp.GiaKhuyenMai).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
-         <p style="text-decoration:line-through;color:black;"><%=parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</p>
-         <%}%>
+            <div class="col-md-8">
+                <div class="product-new col-md-12">
+                    <% if(sanpham.length>=1) { %>
+                        <h4>
+                            <%= sanpham[0].TenLoai%>
+                        </h4>
+                        <% sanpham.forEach(function(sp){%>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="thumbnail">
+                                    <% for (var i=0;i<hinh.length;i++){%>
+                                        <% if(hinh[i].Mahang==sp.MaSanPham){%>
+                                            <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>"> <img src="<%=hinh[i].FileHinh%>" class="img-responsive" alt="..."></a>
+                                            <%break ;}%>
+                                                <% } %>
+                                                    <div class="caption">
+                                                        <div id="name">
+                                                            <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>">
+                                                                <h5>
+                                                                    <%=sp.TenSanPham%>
+                                                                </h5>
+                                                            </a>
+                                                        </div>
+                                                        <a href="/sanpham/<%=chuyenKhongDau(sp.TenSanPham)%>/<%=sp.MaSanPham%>">
+                                                            <% if (sp.KhuyenMai!="có"){%>
+                                                                <p>
+                                                                    <%= parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+                                                                <%}else {%>
+                                                                    <p>
+                                                                        <%= parseFloat(sp.GiaKhuyenMai).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") %> VNĐ</p>
+                                                                    <p style="text-decoration:line-through;color:black;">
+                                                                        <%=parseFloat(sp.GiaThuong).toFixed().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")%> VNĐ</p>
+                                                                    <%}%>
 
-               </a>
-                  </div>
-               </div>
-            </div>
-            <% }) %>
-<div class="col-md-12">
-        <% if (pageCount > 1) { %>
-	        <ul class="pager">
-	            <% if (currentPage > 1) { %>
-	                <li><a href="/danhmuc/<%=chuyenKhongDau(sanpham[0].TenLoai) %>/<%=sanpham[0].LoaiSanPham %>/?page=1">&laquo;</a></li>
-	            <% } %>
-	            <% var i = 1;
+                                                        </a>
+                                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <div class="col-md-12">
+                                    <% if (pageCount > 1) { %>
+                                        <ul class="pager">
+                                            <% if (currentPage > 1) { %>
+                                                <li><a href="/danhmuc/<%=chuyenKhongDau(sanpham[0].TenLoai) %>/<%=sanpham[0].LoaiSanPham %>/?page=1">&laquo;</a></li>
+                                                <% } %>
+                                                    <% var i = 1;
 	            if (currentPage > 5) {
 	                i = +currentPage - 4;
 	            } %>
-	            <% if (i !== 1) { %>
-	                <li class="disabled"><a href="#">...</a></li>
-	            <% } %>
-	            <% for (i; i<=pageCount; i++) { %>
-	                <% if (currentPage == i) { %>
-	                    <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>
-	                <% } else { %>
-	                    <li><a href="/danhmuc/<%=chuyenKhongDau(sanpham[0].TenLoai) %>/<%=sanpham[0].LoaiSanPham %>?page=<%= i %>"><%= i %></a></li>
-	                <% } %>
-	                <% if (i == (+currentPage + 4)) { %>
-	                    <li class="disabled"><a href="#">...</a></li>
-	                <% break; } %>
-	            <% } %>
-	            <% if (currentPage != pageCount) { %>
-	                <li><a href="/danhmuc/<%=chuyenKhongDau(sanpham[0].TenLoai) %>/<%=sanpham[0].LoaiSanPham %>?page=<%= pageCount %>">&raquo;</a></li>
-	            <% } %>
-	        </ul>
-	    <% } %>
-  </div>
-            <%}else{%>
-            <h4>Chưa có sản phẩm</h4>
-            <%}%>    
-         </div>
-      </div>
-   </div>
-</div>
-<%
+                                                        <% if (i !== 1) { %>
+                                                            <li class="disabled"><a href="#">...</a></li>
+                                                            <% } %>
+                                                                <% for (i; i<=pageCount; i++) { %>
+                                                                    <% if (currentPage == i) { %>
+                                                                        <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span>
+                                                                        </li>
+                                                                        <% } else { %>
+                                                                            <li>
+                                                                                <a href="/danhmuc/<%=chuyenKhongDau(sanpham[0].TenLoai) %>/<%=sanpham[0].LoaiSanPham %>?page=<%= i %>">
+                                                                                    <%= i %>
+                                                                                </a>
+                                                                            </li>
+                                                                            <% } %>
+                                                                                <% if (i == (+currentPage + 4)) { %>
+                                                                                    <li class="disabled"><a href="#">...</a></li>
+                                                                                    <% break; } %>
+                                                                                        <% } %>
+                                                                                            <% if (currentPage != pageCount) { %>
+                                                                                                <li><a href="/danhmuc/<%=chuyenKhongDau(sanpham[0].TenLoai) %>/<%=sanpham[0].LoaiSanPham %>?page=<%= pageCount %>">&raquo;</a></li>
+                                                                                                <% } %>
+                                        </ul>
+                                        <% } %>
+                                </div>
+                                <%}else{%>
+                                    <h4>Chưa có sản phẩm</h4>
+                                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%
    function chuyenKhongDau(alias) {
       var str = alias;
       str = str.toLowerCase();

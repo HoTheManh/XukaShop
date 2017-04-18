@@ -20,8 +20,19 @@ var chuyenkhongdau = function(query, callback) {
     callback(str);
 }
 
-
-// xử lý ký tự đặc biệt
+var kytudac_biet = function(query) {
+        if (query == null || query == "" || query == undefined) {
+            var str = " ";
+            return (str);
+        } else {
+            var str = query;
+            str = str.replace(/|\<|\>|\\/g, "");
+            str = str.replace(/ + /g, "");
+            str = str.trim();
+            return (str);
+        }
+    }
+    // xử lý ký tự đặc biệt
 var kytudacbiet = function(query, callback) {
     var str = query;
     str = str.toLowerCase();
@@ -67,13 +78,23 @@ var getBanner = function(callback) {
 
 // lấy thông tin chi tiết sản phẩm
 var getChiTietSanPham = function(id, callback) {
-        var query = "SELECT * FROM sanpham WHERE MaSanPham ='" + id + "'";
-        console.log(query);
+    var query = "SELECT * FROM sanpham WHERE MaSanPham ='" + id + "'";
+    console.log(query);
+    connection.query(query, function(err, sp) {
+        if (err) throw err;
+        hinhanh.getListHinhSanPhamChiTiet(id, function(hinh) {
+            callback(sp, hinh);
+        });
+    });
+}
+
+/// lấy tất cả sản phẩm
+var getAllSanPham = function(callback) {
+        var query = "SELECT * FROM sanpham ";
+        console.log("query");
         connection.query(query, function(err, sp) {
             if (err) throw err;
-            hinhanh.getListHinhSanPhamChiTiet(id, function(hinh) {
-                callback(sp, hinh);
-            });
+            callback(sp)
         });
     }
     // san pham theo loai sanpham
@@ -86,7 +107,20 @@ var getListSanPhamTheoLoai = function(id, callback) {
     });
 }
 
-// tìm kiếm sản phẩm bằng tên
+
+
+
+
+// list sản phẩm admin
+var getListSanPhamAll = function(callback) {
+        var query = "SELECT   nhacungcap.TenNhaCungCap,  sanpham.MaSanPham,  sanpham.TenSanPham,  loaihanghoa.TenLoai,  sanpham.LoaiSanPham,  sanpham.XuatXu,  sanpham.GiaThuong,  sanpham.GiaKhuyenMai,  sanpham.GioiThieu,  sanpham.NhaCungCap,  sanpham.TinhTrang,  sanpham.ThongTin,  sanpham.KhuyenMai,  sanpham.ThuongHieu,  sanpham.LuotMua,  sanpham.Banner,  sanpham.HinhBanner FROM sanpham  INNER JOIN loaihanghoa    ON sanpham.LoaiSanPham = loaihanghoa.MaLoai  INNER JOIN nhacungcap    ON sanpham.NhaCungCap = nhacungcap.MaNhaCungCap";
+        console.log(query);
+        connection.query(query, function(err, rows) {
+            if (err) throw err;
+            callback(rows);
+        });
+    }
+    // tìm kiếm sản phẩm bằng tên
 var searchSanPham = function(keyword, callback) {
         chuyenkhongdau(keyword, function(string) {
             kytudacbiet(keyword, function(string1) {
@@ -114,7 +148,76 @@ var getSanPhamCungLoai = function(id, callback) {
     });
 }
 
+//  xóa sản phẩm
+var deleteSanpham = function(id) {
+    var query = "DELETE FROM sanpham WHERE sanpham.MaSanPham = " + id + ";";
+    console.log(query)
+    connection.query(query, function(err, rows) {
+        if (err) console.log('fail');
+        else console.log('success');
+    });
+};
+var addSanpham = function(req) {
+    var values = [
+        [
+            null,
+            kytudac_biet(req.body.inputTenSP),
+            kytudac_biet(req.body.selectLoaiSP),
+            kytudac_biet(req.body.inputXuatXuSP),
+            kytudac_biet(req.body.inputGiaThuongSP),
+            kytudac_biet(req.body.inputGiaKhuyenMaiSP),
+            kytudac_biet(req.body.inputGioiThieuSP),
+            kytudac_biet(req.body.selectNCCSP),
+            kytudac_biet(req.body.inputTinhTrangSP),
+            kytudac_biet(req.body.inputThongTinSP),
+            kytudac_biet(req.body.inputKhuyenMaiSP),
+            kytudac_biet(req.body.inputThuongHieuSP),
+            kytudac_biet(req.body.inputBannerSP),
+            "/dist/img/" + req.files.inputHinhSP.name
+        ]
+    ];
 
+
+    console.log(values);
+    var query = "INSERT INTO `sanpham` (`MaSanPham`, `TenSanPham`, `LoaiSanPham`, `XuatXu`, `GiaThuong`, `GiaKhuyenMai`, `GioiThieu`, `NhaCungCap`, `TinhTrang`, `ThongTin`, `KhuyenMai`, `ThuongHieu` ,`Banner`, `HinhBanner`) VALUES ?";
+    console.log(query)
+    connection.query(query, [values], function(err, rows) {
+        if (err) console.log('fail');
+        else console.log('success');
+    });
+};
+var updateSanpham = function(req, id) {
+    console.log(id)
+    if (req.files.inputupdateHinhSP != null) {
+        var hinh = "/dist/img/" + req.files.inputupdateHinhSP.name
+    } else {
+        var hinh = "";
+    }
+    var values = {
+        TenSanPham: kytudac_biet(req.body.inputupdateTenSP),
+        LoaiSanPham: kytudac_biet(req.body.selectupdateLoaiSP),
+        XuatXu: kytudac_biet(req.body.inputupdateTenSP),
+        XuatXu: kytudac_biet(req.body.inputupdateXuatXuSP),
+        GiaThuong: kytudac_biet(req.body.inputupdateGiaThuongSP),
+        GiaKhuyenMai: kytudac_biet(req.body.inputupdateGiaKhuyenMaiSP),
+        GioiThieu: kytudac_biet(req.body.inputupdateGioiThieuSP),
+        TinhTrang: kytudac_biet(req.body.inputupdateTinhTrangSP),
+        NhaCungCap: kytudac_biet(req.body.selectupdateNCCSP),
+        ThongTin: kytudac_biet(req.body.inputupdateThongTinSP),
+        KhuyenMai: kytudac_biet(req.body.inputupdateKhuyenMaiSP),
+        ThuongHieu: kytudac_biet(req.body.inputupdateThuongHieuSP),
+        Banner: kytudac_biet(req.body.inputupdateBannerSP),
+        HinhBanner: hinh
+    }
+    console.log(values)
+    var query = "UPDATE `sanpham` SET  ? Where ?";
+
+    connection.query(query, [values, { MaSanPham: id }], function(err) {
+        if (err) console.log('fail');
+        else console.log('success');
+    });
+
+};
 
 module.exports = {
     getBanner: getBanner,
@@ -123,5 +226,10 @@ module.exports = {
     getListSanPhamTheoLoai: getListSanPhamTheoLoai,
     searchSanPham: searchSanPham,
     getSanPhamCungLoai: getSanPhamCungLoai,
-    getListSanPhamMoi: getListSanPhamMoi
+    getListSanPhamMoi: getListSanPhamMoi,
+    getListSanPhamAll: getListSanPhamAll,
+    deleteSanpham: deleteSanpham,
+    getAllSanPham: getAllSanPham,
+    addSanpham: addSanpham,
+    updateSanpham: updateSanpham
 };
