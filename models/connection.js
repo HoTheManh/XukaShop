@@ -16,7 +16,6 @@ connection.connect(function(err) {
         console.error('[DB] ' + err.message);
         return;
     }
-
     console.log('[DB] Connected to ' + dbConfig.user + '@' + dbConfig.host + ':' + dbConfig.port);
 });
 

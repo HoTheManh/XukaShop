@@ -8,11 +8,11 @@
             "request": "launch",
             "env": {
                 "DEBUG": "xukashop:*",
-                "DB_HOST": "https://xukashop-trollteam.rhcloud.com/phpmyadmin/",
-                "DB_USER": "adminCHV3nHE",
-                "DB_PASSWORD": "8l4B1lHx6UJk",
-                "DB_DATABASE": "xukashop",
-                "DB_PORT": "5000"
+                "DB_HOST": "64.62.211.131",
+                "DB_USER": "homanh_homanh",
+                "DB_PORT": "3306",
+                "DB_PASSWORD": "tu1den10",
+                "DB_DATABASE": "homanh_quanlybanhang"
             },
             "name": "Launch Program",
             "program": "${workspaceRoot}\\bin\\www"

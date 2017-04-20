@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser')
-
+var dateTime = require('node-datetime');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
@@ -61,12 +61,15 @@ router.post('/dathang/true', function(req, res) {
     var MaKhachhang = req.session.profile[0].MaKhachhang;
     var tongtien = 0;
     var giohang = req.session.cart;
+    var dt = dateTime.create();
+    var formatted = dt.format('Y-m-d H:M:S');
+    console.log(formatted);
     var chitietvalues = [];
     for (var i = 0; i < giohang.length; i++) {
         tongtien = tongtien + giohang[i].thanhtien;
     }
     var values = [
-        ['Null', MaKhachhang, 'CURRENT_TIMESTAMP', '0', '0', tongtien, 'Chưa Thanh Toán', 'Không']
+        ['Null', MaKhachhang, formatted, '0', '0', tongtien, 'Chưa Thanh Toán', 'Không']
     ];
     dathang.addDonHang(values, function(idDonHang) {
         for (var i = 0; i < giohang.length; i++) {

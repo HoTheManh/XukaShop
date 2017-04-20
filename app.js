@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var crypto = require('crypto-js');
 const fileUpload = require('express-fileupload');
+
 // khai báo connect----------------------------------------
 var mysql = require('mysql')
 
