@@ -1,17 +1,19 @@
 {
-  "name": "XukaShop",
-  "scripts": {
-  },
-  "env": {
-  },
-  "formation": {
-  },
-  "addons": [
+    "name": "XukaShop",
+    "scripts": {},
+    "env": {
+        "DEBUG": "xukashop:*",
+        "DB_HOST": "64.62.211.131",
+        "DB_USER": "homanh_homanh",
+        "DB_PORT": "3306",
+        "DB_PASSWORD": "tu1den10",
+        "DB_DATABASE": "homanh_quanlybanhang"
+    },
+    "formation": {},
+    "addons": [
 
-  ],
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ]
+    ],
+    "buildpacks": [{
+        "url": "heroku/nodejs"
+    }]
 }
